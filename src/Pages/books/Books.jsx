@@ -1,6 +1,8 @@
 import React from 'react'
 
-const Books = () => {
+const Books = ({book}) => {
+  const {user}=useCon
+
   return (
     <div>Books</div>
   )
