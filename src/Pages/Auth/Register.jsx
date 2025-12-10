@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../../components/Hooks/UseAuth';
 import axios from 'axios';
+import SocialLogin from '../SocialLogin';
 
 
 
@@ -11,11 +12,11 @@ const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log('in register', location);
+  // console.log('in register', location);
   const { registeruser, updateUserProfile } = UseAuth();
 
-  const handleRegistion = (data) => {
-    // console.log('after register', data.photo[0]);
+  const handleRegistration = (data) => {
+    console.log('after register', data.photo[0]);
     const profileImg = data.photo[0];
 
     registeruser(data.email, data.password)
@@ -53,8 +54,8 @@ const Register = () => {
 
   }
   return (
-    <div>
-      <form onSubmit={handleSubmit(handleRegistion)}>
+    <div className='max-w-7xl mx-auto px-4'>
+      <form onSubmit={handleSubmit(handleRegistration)}>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
             <fieldset className="fieldset">
@@ -87,7 +88,10 @@ const Register = () => {
               }
 
               {
-                errors.password?.type === 'pattern' && <p className='text-red-500'>Password must have at least one uppercase, at least one lowercase, at least one number, and at least one special characters</p>
+                errors.password?.type === 'required' && <p className='text-red-500'>password is required</p>
+              }
+              {
+                errors.password?.type==='pattern'&&<p className='text-red-500'>Password must have at least one uppercase, at least one lowercase, at least one number, and at least one special characters</p>
               }
 
               <div><a className="link link-hover">Forgot password?</a></div>
@@ -100,7 +104,7 @@ const Register = () => {
               to="/login">Login</Link></p>
 
           </div>
-          {/* <SocialLogin></SocialLogin> */}
+       <SocialLogin></SocialLogin>
         </div>
 
       </form>

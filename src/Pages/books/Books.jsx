@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Books = ({book}) => {
-  const {user}=useCon
+const Books = () => {
+  
 
   return (
     <div>Books</div>

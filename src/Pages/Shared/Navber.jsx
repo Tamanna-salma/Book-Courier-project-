@@ -1,148 +1,157 @@
 import { useState, useEffect } from "react";
+import UseAuth from "../../components/Hooks/UseAuth";
 import { Link, NavLink } from "react-router";
 import Logo from "../Logo";
+import { toast } from "react-toastify";
+import userimg from "../../assets/user.png";
 
-
-const  Navbar=()=> {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-      const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-      //  const { user,logOut } = UseAuth();
-    // const handleLogout=()=>{
-    //     logOut()
-    //     .then(result=>{
-    //         console.log(result);
-    //     })
-    //     .catch(error=>{
-    //         console.log(error);
-    //     })
+  // Auth
+  const { user, logOut } = UseAuth();
 
-    // }
-
-  // fake user data for example
-  const user = {
-    email: "test@example.com",
-    photoURL: "https://i.pravatar.cc/40",
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        toast.success("You have logged out successfully");
+      })
+        .catch((error) => {
+         toast.error(error.message);
+      });
   };
 
+  // Theme Effect
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    const root = document.documentElement;
+    theme === "dark"
+      ? root.classList.add("dark")
+      : root.classList.remove("dark");
+
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const navLinks = 
+  // NavLinks
+  const navLinks = (
     <>
-       
-        <NavLink to='/' className={({ isActive }) =>
-          isActive ? 'text-purple-600 border-b-2  border-purple-600  text-xl font-bold' : 'text-gray-600 text-xl font-bold hover:text-purple-600'
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive
+            ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+            : "text-gray-600 text-lg font-bold hover:text-purple-600"
         }
-        >Home</NavLink>
-      
-      
-        <NavLink to='/allbooks' className={({ isActive }) =>
-          isActive ? 'text-purple-600 border-b-2  border-purple-600  text-xl font-bold' : 'text-gray-600 text-xl font-bold hover:text-purple-600'
-        }
-        >Books</NavLink>
+      >
+        Home
+      </NavLink>
 
-       
-        {
-          user &&<>
-          <NavLink to='/dashboard' className={({ isActive }) =>
-          isActive ? 'text-purple-600 border-b-2  border-purple-600  text-xl font-bold' : 'text-gray-600 text-xl font-bold hover:text-purple-600'
+      <NavLink
+        to="/allbooks"
+        className={({ isActive }) =>
+          isActive
+            ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+            : "text-gray-600 text-lg font-bold hover:text-purple-600"
         }
-        > Dashboard</NavLink>
-          
-          </>
-        }
-    
-     
-      {/* {!user && (
-        <NavLink to="/login" className="hover:text-purple-600">
-          Login / Register
+      >
+        Books
+      </NavLink>
+
+      {user && (
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            isActive
+              ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+              : "text-gray-600 text-lg font-bold hover:text-purple-600"
+          }
+        >
+          Dashboard
         </NavLink>
-      )} */}
-      
+      )}
     </>
- 
+  );
 
   return (
-    <nav className="bg-gray-300 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <nav className="bg-gray-200 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 shadow-sm">
+      <div className="max-w-7xl mx-auto px-2 lg:px-5 py-2 flex items-center justify-between">
 
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-2xl text-gray-700 dark:text-gray-200"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
 
-        {/* mobile menu button */}
-          <button
-            className="md:hidden text-2xl text-gray-700 dark:text-gray-200"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            ☰
-          </button>
-            {/* logo */}
-         <Link to="/" className="text-2xl font-bold flex items-center gap-3">
-          <Logo></Logo>
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-bold flex items-center gap-3">
+      <Logo></Logo>
         </Link>
 
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6 text-gray-700 dark:text-gray-200 font-medium">
           {navLinks}
         </div>
 
+        {/* Right side buttons */}
         <div className="flex items-center gap-4">
 
-          {/* theme toggle */}
+          {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="text-xl text-gray-700 dark:text-gray-200 focus:outline-none"
+            className="text-xl text-gray-700 dark:text-gray-200"
           >
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
 
-          {/* user profile */}
-          {user ? (
-            <img
-              src={user.photoURL}
-              alt="user"
-              className="w-10 h-10 rounded-full border-2 border-blue-500"
-            />
-          ) : (
-            <Link
-              to="/login"
-              className="hidden md:block text-gray-700 dark:text-gray-200"
-            >
-              Login
-            </Link>
-            
-          )}
-           {/* <div className='flex items-center gap-4'>
-          <div className="relative group">
-           {user && <img referrerPolicy="no-referrer" className='w-12 rounded-full cursor-pointer' src={user?.photoURL ? user?.photoURL : userimg} alt="" />}
-            {user?.displayName && (
-              <p className="absolute left-1/2 -translate-x-1/2 mt-1 text-sm bg-gray-300 text-gray-700 p-2 rounded-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {user.displayName}
-              </p>
+          {/* User Profile + Auth Buttons */}
+          <div className="flex items-center gap-4">
+            {user && (
+              <div className="relative group">
+                <img
+                  referrerPolicy="no-referrer"
+                  className="w-10 h-10 rounded-full cursor-pointer border-2 border-purple-500"
+                  src={user?.photoURL || userimg}
+                  alt=""
+                />
+                {user?.displayName && (
+                  <p className="absolute left-1/2 -translate-x-1/2 mt-1 text-sm bg-gray-200 dark:bg-gray-700 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition duration-300">
+                    {user.displayName}
+                  </p>
+                )}
+              </div>
             )}
-          </div>
 
-          {user ?
-            (<button onClick={handleLogout} className="btn bg-fuchsia-800 hover:bg-fuchsia-500 text-white"> Logout</button>
+            {/* Login / Register / Logout */}
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="btn bg-purple-700 hover:bg-purple-500 text-white"
+              >
+                Logout
+              </button>
             ) : (
               <>
-              <Link to="/auth/login" className='btn bg-fuchsia-800 hover:bg-fuchsia-500 text-white px-10'>login</Link>
-        <Link to="/auth/register" className="btn bg-fuchsia-800 hover:bg-fuchsia-500 text-white"> Register</Link>
-        </>
+                <Link
+                  to="/auth/login"
+                  className="btn bg-purple-700 hover:bg-purple-500 text-white px-6"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/auth/register"
+                  className="btn bg-purple-700 hover:bg-purple-500 text-white"
+                >
+                  Register
+                </Link>
+              </>
             )}
-
-        </div> */}
-
-      
+          </div>
         </div>
       </div>
 
-      {/* mobile nav menu */}
+      {/* Mobile Nav */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 flex flex-col gap-3 text-gray-700 dark:text-gray-200 font-medium">
           {navLinks}
@@ -150,6 +159,6 @@ const  Navbar=()=> {
       )}
     </nav>
   );
-}
+};
+
 export default Navbar;
-  
