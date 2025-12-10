@@ -6,6 +6,8 @@ import AuthLayout from "../components/AuthLayout/AuthLayout";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import Error from "../Pages/Error";
+import Dashboard from "../Layout/dashboard/Dashboard";
+import PrivateRoute from "./PrivateRoute";
 
  const router = createBrowserRouter([
   {
@@ -20,10 +22,12 @@ import Error from "../Pages/Error";
         path:"/allbooks",
         element:<Books></Books>
       },
-      // {
-      //   path:"/dashboard",
-      //   element:<Dash
-      // },
+      {
+        path:"/dashboard",
+        element:<PrivateRoute>
+          <Dashboard></Dashboard>
+        </PrivateRoute>
+      },
     ]
   },
   {
