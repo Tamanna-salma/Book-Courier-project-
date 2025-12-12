@@ -61,10 +61,10 @@ const Books = () => {
               </div>
 
               {/* Button */}
-              {/* <button className="mt-4 w-full bg-purple-600 hover:bg-purple-800 text-white py-2 rounded-lg">
+              <p Link to="/allbooks" className="mt-4 w-full bg-purple-600 hover:bg-purple-800 text-white py-2 text-center rounded-lg">
                 View Details
-              </button> */}
-            </div>
+              </p> 
+            </div> 
           </Link>
         ))}
 
