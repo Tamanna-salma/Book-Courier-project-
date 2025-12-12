@@ -61,9 +61,9 @@ const Books = () => {
               </div>
 
               {/* Button */}
-              <button className="mt-4 w-full bg-purple-600 hover:bg-purple-800 text-white py-2 rounded-lg">
+              {/* <button className="mt-4 w-full bg-purple-600 hover:bg-purple-800 text-white py-2 rounded-lg">
                 View Details
-              </button>
+              </button> */}
             </div>
           </Link>
         ))}

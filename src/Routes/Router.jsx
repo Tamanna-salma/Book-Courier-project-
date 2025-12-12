@@ -8,6 +8,7 @@ import Register from "../Pages/Auth/Register";
 import Error from "../Pages/Error";
 import Dashboard from "../Layout/dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import BookDetails from "../Pages/books/BookDetails";
 
  const router = createBrowserRouter([
   {
@@ -21,6 +22,12 @@ import PrivateRoute from "./PrivateRoute";
       {
         path:"/allbooks",
         element:<Books></Books>
+      },
+      {
+        path:'/bookDetails/:id',
+        loader:({params})=>fetch(`http://localhost:3000/Books/${params.id}`),
+        element:<BookDetails></BookDetails>
+
       },
       {
         path:"/dashboard",
