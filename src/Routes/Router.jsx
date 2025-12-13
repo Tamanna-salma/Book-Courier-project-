@@ -11,7 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import BookDetails from "../Pages/books/BookDetails";
 import Coverage from "../Pages/Coverage";
 import AllBooks from "../Pages/AllBooks";
-import Works from "../Pages/Stats";
+import About from "../Pages/About";
 
  const router = createBrowserRouter([
   {
@@ -27,8 +27,8 @@ import Works from "../Pages/Stats";
         element:<AllBooks></AllBooks>
       },
       {
-        path:'/works',
-        element:<Works></Works>
+        path:'/about',
+        element:<About></About>
 
       },
       

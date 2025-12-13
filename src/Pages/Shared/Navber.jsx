@@ -52,6 +52,17 @@ const Navbar = () => {
         Books
       </NavLink>
 
+      <NavLink
+        to="/about"
+        className={({ isActive }) =>
+          isActive
+            ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+            : "text-gray-600 text-lg font-bold hover:text-purple-600"
+        }
+      >
+        About
+      </NavLink>
+
       {user && (
         <NavLink
           to="/dashboard"

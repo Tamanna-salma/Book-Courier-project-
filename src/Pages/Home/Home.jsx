@@ -4,7 +4,9 @@ import Books from '../books/Books'
 import BookDetails from '../books/BookDetails'
 import Coverage from '../Coverage'
 import WhyBookCourier from './WhyBookCourier'
-import Works from '../Stats'
+import Stats from '../Stats'
+// import Service from '../Service'
+
 
 
 const Home = () => {
@@ -15,7 +17,9 @@ const Home = () => {
         <Coverage></Coverage>
         <WhyBookCourier></WhyBookCourier>
         <BookDetails></BookDetails>
-        <Works></Works>
+        <Stats></Stats>
+        {/* <Service></Service> */}
+        
        
         
     </div>
