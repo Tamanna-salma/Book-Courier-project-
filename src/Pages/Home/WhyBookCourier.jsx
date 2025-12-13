@@ -1,4 +1,4 @@
-import { BookOpen, ShieldCheck, Star, Truck, Wallet } from 'lucide-react';
+import { BookOpen, Locate, ShieldCheck, Star, Truck, Wallet } from 'lucide-react';
 import React from 'react'
 const features = [
   {
@@ -26,10 +26,15 @@ const features = [
     title: "Trusted by Readers",
     desc: "Loved by book lovers all over the country.",
   },
+  {
+     icon: <Locate className="w-10 h-10 text-purple-700" />,
+    title: "Online Tracking",
+    desc: "Keep tabs on your shipments with real-time updates .",
+  }
 ];
 const WhyBookCourier = () => {
   return (
-        <section className="bg-gray-50 py-16">
+        <section className="bg-gray-200 py-16">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Heading */}
