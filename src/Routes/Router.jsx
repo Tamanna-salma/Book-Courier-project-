@@ -10,6 +10,7 @@ import Dashboard from "../Layout/dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import BookDetails from "../Pages/books/BookDetails";
 import Coverage from "../Pages/Coverage";
+import AllBooks from "../Pages/AllBooks";
 
  const router = createBrowserRouter([
   {
@@ -22,14 +23,9 @@ import Coverage from "../Pages/Coverage";
       },
       {
         path:"/allbooks",
-        element:<Books></Books>
+        element:<AllBooks></AllBooks>
       },
-      // {
-      //   path:"/covarege",
-      //   element:<Coverage></Coverage>,
-      //   loader:()=>fetch('/service.json').then(res=>res.json())
-
-      // },
+      
       {
         path:'/bookDetails/:id',
         loader:({params})=>fetch(`http://localhost:3000/Books/${params.id}`),
