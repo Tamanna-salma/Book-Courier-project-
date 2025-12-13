@@ -53,7 +53,7 @@ const Service = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4"
+        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 px-4"
       >
         {services.map((service, i) => (
           <motion.div
