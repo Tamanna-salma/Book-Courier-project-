@@ -3,6 +3,7 @@ import Banner from './Banner'
 import Books from '../books/Books'
 import BookDetails from '../books/BookDetails'
 import Coverage from '../Coverage'
+import WhyBookCourier from './WhyBookCourier'
 
 
 
@@ -13,6 +14,7 @@ const Home = () => {
         <Banner></Banner>
         <Books></Books>
         <Coverage></Coverage>
+        <WhyBookCourier></WhyBookCourier>
         <BookDetails></BookDetails>
        
         

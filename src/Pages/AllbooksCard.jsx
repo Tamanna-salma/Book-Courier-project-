@@ -38,7 +38,7 @@ const AllbooksCard = ({book}) => {
         </p>
 
         <p className="text-xl flex justify-between font-semibold text-purple-700 mt-3">
-           {price}
+                $ {price}
             <span className="text-orange-500 font-medium">
                   ⭐ {rating}
                 </span>
