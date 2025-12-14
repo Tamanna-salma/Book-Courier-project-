@@ -41,6 +41,16 @@ const Dashboard = () => {
                                 <GrDeliver />
 
                                     <span className="is-drawer-close:hidden"> myOrders</span>
+                                    
+                                   </NavLink>
+
+                            </li>
+                            <li>
+                                <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="MyOrders" to="/dashboard/send-orders">
+                                <GrDeliver />
+
+                                    
+                                    <span className="is-drawer-close:hidden"> send-orders</span>
                                    </NavLink>
 
                             </li>
@@ -61,4 +71,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Dashboard;

@@ -71,11 +71,11 @@ const Navbar = () => {
             isActive
               ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
               : "text-gray-600 text-lg font-bold hover:text-purple-600"
-          }
-        >
+          }>
           Dashboard
         </NavLink>
       )}
+        
     </>
   );
 
@@ -145,6 +145,8 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-40">
               <li className="text-center font-semibold">{user?.displayName}</li>
               <div className="divider my-1"></div>
+            
+
               <li>
                 <button
                   onClick={handleLogout}

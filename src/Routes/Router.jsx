@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Home from "../Pages/Home/Home";
-import Books from "../Pages/books/Books";
 import AuthLayout from "../components/AuthLayout/AuthLayout";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
@@ -12,6 +11,7 @@ import BookDetails from "../Pages/books/BookDetails";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
+import SendOrders from "../Layout/dashboard/User-Dashboard/SendOrders";
 
  const router = createBrowserRouter([
   {
@@ -35,7 +35,9 @@ import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
       {
         path:'/bookDetails/:id',
         loader:({params})=>fetch(`http://localhost:3000/Books/${params.id}`),
-        element:<BookDetails></BookDetails>
+        element:<PrivateRoute>
+          <BookDetails></BookDetails>
+        </PrivateRoute>
 
       },
      
@@ -66,6 +68,12 @@ import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
             path:'myorders',
             element:<MyOrders></MyOrders>
           },
+          {
+            path:'send-orders',
+            element:<SendOrders></SendOrders>,
+            loader:()=>fetch('/service.json').then(res=>res.json())
+          },
+          
         ]
         
       },

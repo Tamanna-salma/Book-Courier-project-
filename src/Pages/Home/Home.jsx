@@ -5,7 +5,7 @@ import BookDetails from '../books/BookDetails'
 import Coverage from '../Coverage'
 import WhyBookCourier from './WhyBookCourier'
 import Stats from '../Stats'
-// import Service from '../Service'
+
 
 
 
@@ -18,7 +18,7 @@ const Home = () => {
         <WhyBookCourier></WhyBookCourier>
         <BookDetails></BookDetails>
         <Stats></Stats>
-        {/* <Service></Service> */}
+        
         
        
         
