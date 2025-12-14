@@ -9,9 +9,9 @@ import Error from "../Pages/Error";
 import Dashboard from "../Layout/dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import BookDetails from "../Pages/books/BookDetails";
-import Coverage from "../Pages/Coverage";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
+import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
 
  const router = createBrowserRouter([
   {
@@ -38,14 +38,10 @@ import About from "../Pages/About";
         element:<BookDetails></BookDetails>
 
       },
-      {
-        path:"/dashboard",
-        element:<PrivateRoute>
-          <Dashboard></Dashboard>
-        </PrivateRoute>
-      },
+     
     ]
   },
+
   {
     path:'/auth',
     element:<AuthLayout></AuthLayout>,
@@ -60,6 +56,19 @@ import About from "../Pages/About";
       },
     ]
   },
+   {
+        path:"/dashboard",
+        element:<PrivateRoute>
+          <Dashboard></Dashboard>
+        </PrivateRoute>,
+        children:[
+          {
+            path:'myorders',
+            element:<MyOrders></MyOrders>
+          },
+        ]
+        
+      },
   {
     path:"/*",
     element:<Error></Error>
