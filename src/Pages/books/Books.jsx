@@ -42,7 +42,6 @@ const Books = () => {
             <div className="mt-4 px-3">
               {/* Title */}
               <h3 className="text-xl font-semibold">{book.bookName}</h3>
-              <h3 className="text-sm font-semibold">{book.email}</h3>
 
               {/* Author */}
               <p className="text-gray-600 text-sm">by {book.author}</p>

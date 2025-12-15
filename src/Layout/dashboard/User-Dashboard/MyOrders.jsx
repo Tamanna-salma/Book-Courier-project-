@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { FaMagnifyingGlass, FaTrashCan } from 'react-icons/fa6';
 import { FiEdit } from 'react-icons/fi';
 import UseAxiosSecure from '../../../components/Hooks/UseAxiosSecure';
+import { Link } from 'react-router';
 
 
 const MyOrders = () => {
@@ -13,7 +14,7 @@ const MyOrders = () => {
     const { data: orders = [],refetch} = useQuery({
         queryKey: ['myorders', user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/orders?email=${user.email}`);
+            const res = await axiosSecure.get(`/orders?email=${user?.email}`);
             return res.data;
         }
     })
@@ -56,7 +57,7 @@ const MyOrders = () => {
             cost: order.cost,
             parcelId:order._id, 
             senderEmail: order.senderEmail,
-            parcelName: order.parcelName,
+            parcelName: order.BookName,
         }
         const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
 
@@ -66,7 +67,7 @@ const MyOrders = () => {
 
     return (
          <div>
-            <h2 className='px-4 '>All of my parcels : {orders.length}</h2>
+            <h2 className='px-4 '>All of my Orders : {orders.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                     {/* head */}
@@ -75,7 +76,7 @@ const MyOrders = () => {
                             <th></th>
                             <th>BookName</th>
                             <th>Cost</th>
-                            <th>Payment</th>
+                            <th>Payment Status</th>
                             <th>Delivery Status</th>
                             <th>Actions</th>
                         </tr>
@@ -88,29 +89,29 @@ const MyOrders = () => {
                     <td>{order.cost}</td>
                     <td>
               {
-                 order.paymentstatus === 'paid' ?
+                order.paymentStatus === 'paid'?
+
                       <span className='text-green-400'>Paid</span>
                       :
-                //       <Link to={`/dashboard/payment/${parcel._id}`}>
-                //       <button onClick={() => handlePayment(parcel)} className="btn btn-sm btn-primary text-black">Pay</button>
-                //       </Link>
-                 <button onClick={() => handlePayment(order)} className="btn btn-sm btn-primary text-black">Pay</button>
+                      <Link to={`/dashboard/payment/${orders._id}`}>
+                      <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
+                      </Link>
+                //  <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
 
 
                           }
                      
                       </td>
-                      <td>{order.deliveryStatus}</td>
+                      <td>{order.deliveryStatus || 'pending'}</td>
                       <td>
-                          <button className='btn btn-square hover:bg-primary'>
+                          <button className='btn btn-square hover:bg-purple-400'>
                               <FaMagnifyingGlass />
                           </button>
-                          <button className='btn btn-square hover:bg-primary mx-2'>
+                          <button className='btn btn-square hover:bg-purple-400 mx-2'>
                               <FiEdit></FiEdit>
                           </button>
-                          <button
-                                        onClick={() => handleParcelDelete(order._id)}
-                                        className='btn btn-square hover:bg-primary'>
+                          <button onClick={() => handleParcelDelete(order._id)}
+                                        className='btn btn-square hover:bg-purple-400'>
                                         <FaTrashCan />
                                     </button>
                                 </td>

@@ -68,11 +68,11 @@ const SendOrders = () => {
             if (result.isConfirmed) {
 
                 // save the order info to the database
-                axiosSecure.post('/parcels', data)
+                axiosSecure.post('/orders', data)
                     .then(res => {
-                        console.log('after saving parcel', res.data);
+                        console.log('after saving orders', res.data);
                         if (res.data.insertedId) {
-                           navigate('/dashboard/myparcel') 
+                           navigate('/dashboard/myorders') 
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",

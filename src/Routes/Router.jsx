@@ -12,6 +12,7 @@ import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
 import SendOrders from "../Layout/dashboard/User-Dashboard/SendOrders";
+import Payment from "../Layout/dashboard/User-Dashboard/payment/Payment";
 
  const router = createBrowserRouter([
   {
@@ -73,7 +74,11 @@ import SendOrders from "../Layout/dashboard/User-Dashboard/SendOrders";
             element:<SendOrders></SendOrders>,
             loader:()=>fetch('/service.json').then(res=>res.json())
           },
-          
+          {
+            path:'payment/:ordersId',
+            element:<Payment></Payment>
+         
+          }
         ]
         
       },
