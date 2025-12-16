@@ -11,15 +11,15 @@ import { Link } from 'react-router';
 const MyOrders = () => {
     const { user } = UseAuth();
     const axiosSecure = UseAxiosSecure();
-    const { data: orders = [],refetch} = useQuery({
+    const { data: orders = [], refetch } = useQuery({
         queryKey: ['myorders', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/orders?email=${user?.email}`);
             return res.data;
         }
     })
-//delate
-     const handleParcelDelete = id => {
+    //delate
+    const handleParcelDelete = id => {
         console.log(id);
 
         Swal.fire({
@@ -47,17 +47,17 @@ const MyOrders = () => {
                                 icon: "success"
                             });
                         }
-                   })
+                    })
             }
         })
     }
 
     const handlePayment = async (order) => {
         const paymentInfo = {
-            cost: order.cost,
-            parcelId:order._id, 
-            senderEmail: order.senderEmail,
-            parcelName: order.BookName,
+            price: order.price,
+            orderId: order._id,
+            userEmail: order.userEmail,
+            bookName: order.bookName,
         }
         const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
 
@@ -66,7 +66,7 @@ const MyOrders = () => {
     };
 
     return (
-         <div>
+        <div>
             <h2 className='px-4 '>All of my Orders : {orders.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
@@ -82,35 +82,34 @@ const MyOrders = () => {
                         </tr>
                     </thead>
                     <tbody>
-            {
-                orders.map((order, index) => <tr key={order._id}>
-                    <th>{index + 1}</th>
-                    <td>{order.BookName}</td>
-                    <td>{order.cost}</td>
-                    <td>
-              {
-                order.paymentStatus === 'paid'?
+                        {
+                            orders.map((order, index) => <tr key={order._id}>
+                                <th>{index + 1}</th>
+                                <td>{order.bookName}</td>
+                                <td>$ {order.price}</td>
+                                <td>
+                                    {
+                                        order.paymentStatus === 'paid' ?
 
-                      <span className='text-green-400'>Paid</span>
-                      :
-                      <Link to={`/dashboard/payment/${orders._id}`}>
-                      <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
-                      </Link>
-                //  <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
+                                            <span className='text-green-400'>Paid</span>
+                                            :
+                                            <Link to={`/dashboard/payment/${order._id}`}>
+                                                <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
+                                            </Link>
+                                        //  <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
 
+                                    }
 
-                          }
-                     
-                      </td>
-                      <td>{order.deliveryStatus || 'pending'}</td>
-                      <td>
-                          <button className='btn btn-square hover:bg-purple-400'>
-                              <FaMagnifyingGlass />
-                          </button>
-                          <button className='btn btn-square hover:bg-purple-400 mx-2'>
-                              <FiEdit></FiEdit>
-                          </button>
-                          <button onClick={() => handleParcelDelete(order._id)}
+                                </td>
+                               <td>{order.status}</td>
+                                <td>
+                                    <button className='btn btn-square hover:bg-purple-400'>
+                                        <FaMagnifyingGlass />
+                                    </button>
+                                    <button className='btn btn-square hover:bg-purple-400 mx-2'>
+                                        <FiEdit></FiEdit>
+                                    </button>
+                                    <button onClick={() => handleParcelDelete(order._id)}
                                         className='btn btn-square hover:bg-purple-400'>
                                         <FaTrashCan />
                                     </button>

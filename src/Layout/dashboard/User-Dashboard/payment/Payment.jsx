@@ -4,24 +4,24 @@ import UseAxiosSecure from '../../../../components/Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 const Payment = () => {
-    const { parcelId } = useParams();
+    const {ordersId } = useParams();
     const axiosSecure = UseAxiosSecure();
 
-    const { isLoading, data: parcel } = useQuery({
-        queryKey: ['parcels', parcelId],
+    const { isLoading, data: order } = useQuery({
+        queryKey: ['orders', ordersId],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/parcels/${parcelId}`);
+            const res = await axiosSecure.get(`/orders/${ordersId}`);
             return res.data;
         }
     })
 
     const handlePayment = async() => {
-        const paymentInfo = {
-            cost: parcel.cost,
-            parcelId: parcel._id,
-            senderEmail: parcel.senderEmail,
-            parcelName: parcel.parcelName
-        }
+   const paymentInfo = {
+      price: order.price,
+      orderId: order._id,
+      userEmail: order.userEmail,
+      bookName: order.bookName
+    };
 
         const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
 
@@ -38,8 +38,8 @@ const Payment = () => {
 
     return (
         <div>
-            <h2>Please Pay ${parcel?.cost} for : {parcel?.parcelName} </h2>
-            <button onClick={handlePayment} className='btn btn-primary text-black'>Pay</button>
+            <h2>Please Pay {order?.price}for : {order?. bookName} </h2>
+            <button onClick={handlePayment} className='btn bg-green-600 text-white'>Pay</button>
         </div>
     );
 };

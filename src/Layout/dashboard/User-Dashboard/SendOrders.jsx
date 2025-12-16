@@ -107,7 +107,7 @@ const SendOrders = () => {
                 {/* parcel info: name, weight */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 my-8'>
                     <fieldset className="fieldset">
-                        <label className="label">Parcel Name</label>
+                        <label className="label">Order Name</label>
                         <input type="text" {...register('parcelName')} className="input w-full" placeholder="Parcel Name" />
                     </fieldset>
                     <fieldset className="fieldset">
