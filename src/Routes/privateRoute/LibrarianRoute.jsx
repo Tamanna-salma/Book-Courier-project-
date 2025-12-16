@@ -1,13 +1,15 @@
+
+
 import { Navigate } from "react-router";
 import useRole from "../../components/Hooks/useRole";
 import Loading from "../../Pages/Loading";
 
-const CustomerRoute = ({ children }) => {
+const LibrarianRoute = ({ children }) => {
   const [role, isRoleLoading] = useRole();
 
-  if (isRoleLoading) return <Loading></Loading>;
-  if (role === "customer") return children;
+  if (isRoleLoading) return <Loading />;
+  if (role === "Librarian") return children;
   return <Navigate to="/" replace="true" />;
 };
 
-export default CustomerRoute;
+export default LibrarianRoute;
