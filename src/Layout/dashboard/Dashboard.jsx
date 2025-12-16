@@ -1,107 +1,245 @@
-import { GrDeliver } from "react-icons/gr";
-import React from 'react'
-import { Link, NavLink, Outlet } from 'react-router'
-import { FaBook } from "react-icons/fa6";
-import { SiWikibooks } from "react-icons/si";
-import { BsBorderStyle } from "react-icons/bs";
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import UseAuth from "../../components/Hooks/UseAuth";
 import useRole from "../../components/Hooks/useRole";
+import Swal from "sweetalert2";
+import { FiHome, FiMenu } from "react-icons/fi";
+import { FaBook, FaHeartPulse, FaJediOrder, FaRegCircleUser } from "react-icons/fa6";
+import { IoMdLogOut } from "react-icons/io";
+import { MdDashboard } from "react-icons/md";
 const Dashboard = () => {
-    const { role } = useRole;
-    return (
-        <div className='max-w-7xl mx-auto px-4'>
-            <div className="drawer lg:drawer-open">
-                <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content">
-                    {/* Navbar */}
-                    <nav className="navbar w-full bg-base-300">
-                        <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                            {/* Sidebar toggle icon */}
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
-                        </label>
-                        <div className="px-4 text-purple-600 text-3xl font-bold">Book Courier</div>
-                    </nav>
-                    {/* Page content here */}
-                    <Outlet></Outlet>
+    const { pathname } = useLocation();
+    const { user, logoutUserFunc, loading } = UseAuth();
+    const navigate = useNavigate();
+    const [role] = useRole();
 
+    const isActive = (path) =>
+        pathname === path
+            ? "bg-purple-200 dark:bg-purple-700 text-purple-700 dark:text-white font-semibold"
+            : "hover:bg-purple-100 dark:hover:bg-gray-700";
+
+    const handleLogout = async () => {
+        const confirm = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to logout?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, logout!",
+        });
+        if (!confirm.isConfirmed) return;
+        try {
+            await logoutUserFunc();
+            Swal.fire({
+                title: "Logout Successful",
+                text: "You have been logged out",
+                icon: "success",
+                confirmButtonColor: "#22c55e",
+            });
+            navigate("/");
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: "Logout Failed",
+                text: error.message || "Something went wrong",
+                icon: "error",
+                confirmButtonColor: "#ef4444",
+            });
+        }
+    };
+
+    if (loading) return null;
+
+    return (
+        <div className="min-h-screen bg-purple-50 dark:bg-gray-900 dark:text-white">
+            <div className="drawer lg:drawer-open">
+                <input id="drawer-toggle" type="checkbox" className="drawer-toggle" />
+
+                {/* Main Content */}
+                <div className="drawer-content flex flex-col">
+                    {/* Navbar */}
+                    <nav className="navbar shadow-md px-4 flex justify-between items-center bg-white dark:bg-gray-800 dark:text-white ">
+                        <label htmlFor="drawer-toggle" className="btn btn-ghost lg:hidden">
+                            <FiMenu className="text-xl" />
+                        </label>
+
+                        <h2 className="text-2xl font-bold text-purple-600">
+                            <Link to="/">Book Courier</Link>
+                        </h2>
+                    </nav>
+
+                    <div className="p-6 ">
+                        <Outlet />
+                    </div>
                 </div>
 
-                <div className="drawer-side is-drawer-close:overflow-visible">
-                    <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-                        {/* Sidebar */}
-                        <ul className="menu w-full grow">
-                            {/* List item */}
+                {/* Sidebar */}
+                <div className="drawer-side">
+                    <label htmlFor="drawer-toggle" className="drawer-overlay"></label>
+
+                    <aside className="w-64 bg-white dark:bg-gray-800 shadow-md min-h-full p-4 flex flex-col">
+                        <ul className="menu text-base flex-1 dark:text-gray-200">
+                            <div className="min-h-[85vh] ">
+                                {/* Home */}
+
+                                <li>
+                                    <Link
+                                        to="/"
+                                        className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                            "/"
+                                        )}`}
+                                    >
+                                        <FiHome className="text-lg" />
+                                        <span>Home</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/dashboard"
+                                        className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                            "/dashboard"
+                                        )}`}
+                                    >
+                                        <MdDashboard className="text-lg" />
+                                        <span>Dashboard</span>
+                                    </Link>
+                                </li>
+
+                                {role === "customer" && (
+                                    <>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/my-orders"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/my-orders"
+                                                )}`}
+                                            >
+                                                <FaJediOrder className="text-lg" />
+                                                <span>My Orders</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/invoices"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/invoices"
+                                                )}`}
+                                            >
+                                                <LiaFileInvoiceSolid className="text-lg" />
+                                                <span>Invoices</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/wish-list"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/wish-list"
+                                                )}`}
+                                            >
+                                                <FaHeartPulse className="text-lg" />
+                                                <span>Wish List</span>
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
+
+                                {role === "Librarian" && (
+                                    <>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/add-books"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/add-books"
+                                                )}`}
+                                            >
+                                                <FaBook className="text-lg" />
+                                                <span>Add Book</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/my-books"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/my-books"
+                                                )}`}
+                                            >
+                                                <SiWikibooks className="text-lg" />
+                                                <span>My Books</span>
+                                            </Link>
+                                        </li>
+                                       
+                                        <li>
+                                            <Link
+                                                to="/dashboard/orders"
+
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/orders"
+                                                )}`}
+                                            >
+                                                <BsBorderStyle className="text-lg" />
+                                                <span>Orders</span>
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
+
+                                {/* Admin */}
+                                {role === "admin" && (
+                                    <>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/all-user"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/all-user"
+                                                )}`}
+                                            >
+                                                <GrUserManager className="text-lg" />
+                                                <span>All User</span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link
+                                                to="/dashboard/manage-book"
+                                                className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                                    "/dashboard/manage-book"
+                                                )}`}
+                                            >
+                                                <FaBook className="text-lg" />
+                                                <span>Manage Book</span>
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
+                            </div>
+
+                            {/* Profile */}
                             <li>
-                                <Link to="/" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-                                    {/* Home icon */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                                    <span className="is-drawer-close:hidden text-purple-600 font-bold">Homepage</span>
+                                <Link
+                                    to="/dashboard/profile"
+                                    className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
+                                        "/dashboard/profile"
+                                    )}`}
+                                >
+                                    <FaRegCircleUser className="text-lg" />
+                                    <span>Profile</span>
                                 </Link>
                             </li>
 
-                            {/* our dashboard linkss */}
+                            {/* Logout */}
                             <li>
-                                <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="MyOrders" to="/dashboard/myorders">
-                                    <GrDeliver />
-
-                                    <span className="is-drawer-close:hidden font-bold text-purple-600"> MyOrders</span>
-
-                                </NavLink>
-
-                            </li>
-
-                            {/* librarian links*** */}
-                            {role === "Librarian" && (
-                                <>
-                                    <li>
-                                        <Link
-                                            to="/dashboard/add-books"
-                                            className={`flex items-center text-purple-500 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                "/dashboard/add-books"
-                                            )}`}>
-                                            <FaBook className="text-lg" />
-                                            <span>Add Book</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/dashboard/my-books"
-                                            className={`flex items-center text-purple-500 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                "/dashboard/my-books"
-                                            )}`}
-                                        >
-                                            <SiWikibooks className="text-lg" />
-                                            <span>My Books</span>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/dashboard/orders"
-                                            className={`flex items-center text-purple-500 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                "/dashboard/orders"
-                                            )}`}>
-                                            <BsBorderStyle className="text-lg" />
-                                            <span>Orders</span>
-                                        </Link>
-                                    </li>
-                                </>
-                            )}
-
-
-                            {/* List item */}
-                            <li>
-                                <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-                                    {/* Settings icon */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
-                                    <span className="is-drawer-close:hidden">Settings</span>
+                                <button
+                                    onClick={handleLogout}
+                                    className="flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg hover:bg-purple-200 dark:hover:bg-red-600 dark:text-white  transition"
+                                >
+                                    <IoMdLogOut className="text-lg" />
+                                    <span>Logout</span>
                                 </button>
                             </li>
                         </ul>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
-export default Dashboard;
+    export default Dashboard;
