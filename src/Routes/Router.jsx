@@ -11,8 +11,8 @@ import BookDetails from "../Pages/books/BookDetails";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
-import SendOrders from "../Layout/dashboard/User-Dashboard/SendOrders";
 import Payment from "../Layout/dashboard/User-Dashboard/payment/Payment";
+import LibrarianDeshboard from "../Layout/dashboard/Librarian-Dashboard/LibrarianDeshboard";
 
  const router = createBrowserRouter([
   {
@@ -69,15 +69,15 @@ import Payment from "../Layout/dashboard/User-Dashboard/payment/Payment";
             path:'myorders',
             element:<MyOrders></MyOrders>
           },
-          {
-            path:'send-orders',
-            element:<SendOrders></SendOrders>,
-            loader:()=>fetch('/service.json').then(res=>res.json())
-          },
+         
           {
             path:'payment/:ordersId',
             element:<Payment></Payment>
          
+          },
+          {
+            path:'librarian',
+            element:<LibrarianDeshboard></LibrarianDeshboard>
           }
         ]
         
