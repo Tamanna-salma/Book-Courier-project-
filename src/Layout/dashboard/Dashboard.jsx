@@ -6,6 +6,12 @@ import { FiHome, FiMenu } from "react-icons/fi";
 import { FaBook, FaHeartPulse, FaJediOrder, FaRegCircleUser } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
+import { GrUserManager } from "react-icons/gr";
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import { SiWikibooks } from "react-icons/si";
+import { BsBorderStyle } from "react-icons/bs";
+
+
 const Dashboard = () => {
     const { pathname } = useLocation();
     const { user, logoutUserFunc, loading } = UseAuth();

@@ -60,7 +60,7 @@ const Books = () => {
               </div>
 
               {/* Button */}
-              <p Link to="/allbooks" className="mt-4 w-full bg-purple-600 hover:bg-purple-800 text-white py-2 text-center rounded-lg">
+              <p Link to="/bookDetails" className="mt-4 w-full bg-purple-600 hover:bg-purple-800 text-white py-2 text-center rounded-lg">
                 View Details
               </p> 
             </div> 

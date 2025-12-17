@@ -6,7 +6,7 @@ import { Link } from "react-router";
 const LibrarianDeshboard = () => {
   return (
     <div className="min-h-screen bg-purple-50 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-purple-600">
+      <h1 className="text-3xl font-bold mb-6 text-center text-purple-600">
         Librarian Dashboard
       </h1>
 
