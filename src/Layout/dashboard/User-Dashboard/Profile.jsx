@@ -1,0 +1,181 @@
+
+// import { imageUpload } from "../../../utils";
+// import { updateProfile } from "firebase/auth";
+import { useState } from "react";
+import UseAuth from "../../../components/Hooks/UseAuth";
+import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import Loading from "../../../Pages/Loading";
+import { FaUser } from "react-icons/fa6";
+import { IoIosPhotos } from "react-icons/io";
+
+const Profile = () => {
+  const { user } = UseAuth();
+  const axiosSecure = UseAxiosSecure();
+  const [isProfile, setIsProfile] = useState(false);
+  const {
+    data: userInfo = {},
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["user-info", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/users/${user.email}`);
+      return data;
+    },
+  });
+
+  const { register, handleSubmit, reset } = useForm();
+
+  const handleProfileUpdate = async (data) => {
+    try {
+      Swal.fire({
+        title: "Updating...",
+        text: "Please wait",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      let imageURL = image;
+
+      if (data.photo && data.photo.length > 0) {
+        imageURL = await imageUpload(data.photo[0]);
+      }
+
+      await updateProfile(user, {
+        displayName: data.name,
+        photoURL: imageURL,
+      });
+
+      const updateData = {
+        name: data.name,
+        image: imageURL,
+      };
+
+      const res = await axiosSecure.patch(`/users/${userInfo._id}`, updateData);
+
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          icon: "success",
+          title: "Profile Updated!",
+          text: "Your profile information has been updated successfully.",
+          confirmButtonColor: "#16a34a",
+        });
+
+        refetch();
+        reset();
+        setIsProfile(false);
+      } else {
+        Swal.fire({
+          icon: "info",
+          title: "No Changes",
+          text: "Nothing was updated!",
+          confirmButtonColor: "#16a34a",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        confirmButtonColor: "#dc2626",
+      });
+    }
+  };
+
+  if (isLoading) return <Loading />;
+
+  const { name, email, image, create_date, last_loggedIn, role } = userInfo;
+
+  return (
+    <>
+      <div className="max-w-lg mx-auto mt-10 p-6 bg-purple-50 shadow-lg rounded-lg border border-purple-400">
+        <div className="flex flex-col items-center text-center">
+          <img
+            src={image}
+            alt="Profile"
+            className="w-28 h-28 rounded-full border-2 border-purple-400 shadow"
+          />
+
+          <p className="border border-purple-400 rounded-full py-1 px-3 bg-purple-200 mt-1 text-gray-700 font-semibold">
+            {role}
+          </p>
+
+          <h2 className="text-2xl font-semibold mt-3">{name}</h2>
+          <p className="text-gray-600">{email}</p>
+
+          <div className="mt-5 w-full text-left space-y-2">
+            <p>
+              <span className="font-semibold">Created:</span>{" "}
+              {new Date(create_date).toLocaleString()}
+            </p>
+            <p>
+              <span className="font-semibold">Last Login:</span>{" "}
+              {new Date(last_loggedIn).toLocaleString()}
+            </p>
+          </div>
+          <button
+            onClick={() => setIsProfile(true)}
+            className={`py-2 px-4 w-full mt-3 bg-purple-500 text-white font-semibold rounded-md cursor-pointer ${
+              isProfile ? "hidden" : "block"
+            }`}
+          >
+            Update Profile
+          </button>
+        </div>
+      </div>
+
+      {isProfile && (
+        <div className="max-w-lg mx-auto mt-8 border border-purple-400 p-3 rounded-md">
+          <form onSubmit={handleSubmit(handleProfileUpdate)}>
+            <div className="flex flex-col">
+              <label
+                htmlFor="name"
+                className="text-purple-700 font-semibold mb-1"
+              >
+                Full Name
+              </label>
+              <div className="flex items-center border border-purple-300 rounded p-2 focus-within:ring-2 focus-within:ring-purple-400">
+                <FaUser className="text-purple-500 mr-2" />
+                <input
+                  {...register("name")}
+                  type="text"
+                  defaultValue={userInfo?.name}
+                  id="name"
+                  placeholder="Full Name"
+                  className="w-full outline-none bg-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col mt-3">
+              <label
+                htmlFor="photo"
+                className="text-purple-700 font-semibold mb-1"
+              >
+                Your Photo
+              </label>
+              <div className="flex items-center border border-purple-300 rounded p-2 focus-within:ring-2 focus-within:ring-purple-400">
+                <IoIosPhotos className="text-purple-500 mr-2" />
+                <input
+                  {...register("photo")}
+                  type="file"
+                  id="photo"
+                  className="w-full outline-none bg-transparent"
+                />
+              </div>
+            </div>
+
+            <button className="py-2 px-4 w-full mt-3 bg-purple-500 text-white font-semibold rounded-md">
+              Update Profile
+            </button>
+          </form>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Profile;

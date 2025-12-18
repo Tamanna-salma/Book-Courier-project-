@@ -11,7 +11,7 @@ import BookDetails from "../Pages/books/BookDetails";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
-import Payment from "../Layout/dashboard/User-Dashboard/payment/Payment";
+import Payment from "../Layout/dashboard/User-Dashboard/payment/PaymentSuccess";
 import LibrarianDeshboard from "../Layout/dashboard/Librarian-Dashboard/LibrarianDeshboard";
 import WishList from "../Pages/WishList";
 
