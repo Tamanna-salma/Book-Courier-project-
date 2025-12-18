@@ -93,18 +93,6 @@ const AddBook = () => {
 
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaFileAlt className="text-purple-500" /> ISBN
-          </label>
-          <input
-            {...register("isbn", { required: true })}
-            type="text"
-            placeholder="Enter ISBN number"
-            className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-          />
-        </div>
-
-        <div>
-          <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
             <FaUser className="text-purple-500" /> Publisher
           </label>
           <input
@@ -129,7 +117,7 @@ const AddBook = () => {
 
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaSortNumericDown className="text-purple-500" /> Number of Pages
+            <FaSortNumericDown className="text-purple-500" /> Total page
           </label>
           <input
             {...register("pageNumber", { required: true })}
@@ -139,30 +127,7 @@ const AddBook = () => {
           />
         </div>
 
-        <div>
-          <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaLanguage className="text-purple-500" /> Language
-          </label>
-          <input
-            {...register("language", { required: true })}
-            type="text"
-            placeholder="Enter language"
-            className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-          />
-        </div>
-
-        <div>
-          <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaLayerGroup className="text-purple-500" /> Genre
-          </label>
-          <input
-            {...register("genre", { required: true })}
-            type="text"
-            placeholder="Enter genre"
-            className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-          />
-        </div>
-
+        
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
             <FaDollarSign className="text-purple-500" /> Price
@@ -189,18 +154,6 @@ const AddBook = () => {
 
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaFileAlt className="text-purple-500" /> Edition
-          </label>
-          <input
-            {...register("edition", { required: true })}
-            type="text"
-            placeholder="Enter edition"
-            className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-          />
-        </div>
-
-        <div>
-          <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
             <FaLayerGroup className="text-purple-500" /> Format
           </label>
           <input
@@ -219,6 +172,18 @@ const AddBook = () => {
             {...register("category", { required: true })}
             type="text"
             placeholder="Enter category"
+            className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+        </div>
+
+        <div>
+          <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
+            <FaLayerGroup className="text-purple-500" /> tags
+          </label>
+          <input
+            {...register("tags", { required: true })}
+            type="text"
+            placeholder="Enter Tags"
             className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>
@@ -252,7 +217,6 @@ const AddBook = () => {
           />
         </div>
 
-        {/* Book Description (full width) */}
         <div className="md:col-span-2">
           <label className="block text-gray-700 font-semibold mb-1">
             Book Description

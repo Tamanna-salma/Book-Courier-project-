@@ -12,9 +12,9 @@ const MyBook = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["my-books", user?.email],
+    queryKey: ["mybooks", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-books/${user?.email}`);
+      const res = await axiosSecure.get(`/mybooks/${user?.email}`);
       return res.data;
     },
   });
@@ -60,52 +60,47 @@ const MyBook = () => {
                   <tr className="bg-purple-200">
                     <th
                       scope="col"
-                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold  text-center"
                     >
                       Image
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold   text-center"
                     >
                       Book Name
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold  text-center"
                     >
                       Author Name
                     </th>
 
                     <th
                       scope="col"
-                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold  text-center"
                     >
                       create date
                     </th>
 
                     <th
                       scope="col"
-                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold   text-center"
                     >
                       Price
                     </th>
+                    
                     <th
                       scope="col"
-                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
-                    >
-                      language
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold   text-center"
                     >
                       Status
                     </th>
 
                     <th
                       scope="col"
-                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold  text-center"
                     >
                       Action
                     </th>

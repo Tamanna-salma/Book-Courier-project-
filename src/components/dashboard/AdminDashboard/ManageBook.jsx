@@ -11,9 +11,9 @@ const ManageBook = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["mange-books"],
+    queryKey: ["manageBook"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/mange-books`);
+      const res = await axiosSecure.get(`/manageBook`);
       return res.data;
     },
   });
@@ -80,4 +80,4 @@ const ManageBook = () => {
   )
 }
 
-export default ManageBook
+export default ManageBook;

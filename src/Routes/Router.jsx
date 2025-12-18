@@ -5,13 +5,10 @@ import AuthLayout from "../components/AuthLayout/AuthLayout";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import Error from "../Pages/Error";
-import Dashboard from "../Layout/dashboard/Dashboard";
-import PrivateRoute from "./PrivateRoute";
 import BookDetails from "../Pages/books/BookDetails";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
-import DashBoardRoot from "../Layout/dashboard/DashBoardRoot";
 import CustomerRoute from "./privateRoute/CustomerRoute";
 import PaymentSuccess from "../Layout/dashboard/User-Dashboard/payment/PaymentSuccess";
 import Invoices from "../Layout/dashboard/User-Dashboard/Invoices";
@@ -21,6 +18,12 @@ import MyBook from "../Layout/dashboard/Librarian-Dashboard/MyBook";
 import UpdateBook from "../Layout/UpdateBook";
 import Orders from "../Layout/dashboard/Librarian-Dashboard/Orders";
 import Profile from "../Layout/dashboard/User-Dashboard/Profile";
+import AdminRoute from "./privateRoute/AdminRoute";
+import UserManagement from "../Layout/dashboard/AdminDashboard/UserManagement";
+import ManageBook from "../Layout/dashboard/AdminDashboard/ManageBook";
+import AddBook from "../Layout/dashboard/Librarian-Dashboard/AddBook";
+import DashboardLayout from "../Layout/DashboardLayout";
+import DashboardRoot from "../components/DashboardRoot/DashboardRoot";
 
 
 const router = createBrowserRouter([
@@ -71,14 +74,13 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <PrivateRoute>
-      <Dashboard></Dashboard>
+      <DashboardLayout></DashboardLayout>
     </PrivateRoute>,
     children: [
       {
         index: true,
-        element: <DashBoardRoot></DashBoardRoot>,
+        element:<DashboardRoot></DashboardRoot> 
       },
-
 
       {
         path: 'myOrders',
@@ -104,11 +106,13 @@ const router = createBrowserRouter([
         element: <CustomerRoute>
           <WishList></WishList>
         </CustomerRoute>
-      },
+      }, 
+
+      // Librarian
       {
-        path: 'add-books',
+        path: 'addbooks',
         element: <LibrarianRoute>
-          <AddBook></AddBook>
+        <AddBook></AddBook>
         </LibrarianRoute>
       },
       {
@@ -134,14 +138,24 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <LibrarianRoute>
-          <Profile></Profile>
-        </LibrarianRoute>
+        element: 
+          <Profile></Profile>  
 
       },
-      //admin
+              //admin
       {
-        
+        path:'allUser',
+        element:<AdminRoute>
+          <UserManagement></UserManagement>
+        </AdminRoute>
+
+      },
+      {
+        path:'manageBook',
+        element:<AdminRoute>
+         <ManageBook></ManageBook>
+        </AdminRoute>
+
       }
 
     ]

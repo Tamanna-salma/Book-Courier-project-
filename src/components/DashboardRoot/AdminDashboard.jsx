@@ -80,7 +80,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* FOOTER */}
-      {/* <p className="text-center mt-12 text-gray-600">
+      <p className="text-center mt-12 text-gray-600">
         Visit Live Website:{" "}
         <a
           className="text-purple-700 font-bold hover:underline"
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
           target="_blank">
           Book Courier Website
         </a>
-      </p> */}
+      </p>
     </div>
   );
 };

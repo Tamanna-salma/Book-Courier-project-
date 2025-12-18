@@ -12,7 +12,7 @@ import { SiWikibooks } from "react-icons/si";
 import { BsBorderStyle } from "react-icons/bs";
 
 
-const Dashboard = () => {
+const DashboardLayout = () => {
     const { pathname } = useLocation();
     const { user, logoutUserFunc, loading } = UseAuth();
     const navigate = useNavigate();
@@ -115,9 +115,9 @@ const Dashboard = () => {
                                     <>
                                         <li>
                                             <Link
-                                                to="/dashboard/my-orders"
+                                                to="/dashboard/myOrders"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/my-orders"
+                                                    "/dashboard/myOrders"
                                                 )}`}
                                             >
                                                 <FaJediOrder className="text-lg" />
@@ -137,9 +137,9 @@ const Dashboard = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to="/dashboard/wish-list"
+                                                to="/dashboard/wishlist"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/wish-list"
+                                                    "/dashboard/wishlist"
                                                 )}`}
                                             >
                                                 <FaHeartPulse className="text-lg" />
@@ -153,9 +153,9 @@ const Dashboard = () => {
                                     <>
                                         <li>
                                             <Link
-                                                to="/dashboard/add-books"
+                                                to="/dashboard/addbooks"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/add-books"
+                                                    "/dashboard/addbooks"
                                                 )}`}
                                             >
                                                 <FaBook className="text-lg" />
@@ -164,9 +164,9 @@ const Dashboard = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to="/dashboard/my-books"
+                                                to="/dashboard/mybooks"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/my-books"
+                                                    "/dashboard/mybooks"
                                                 )}`}
                                             >
                                                 <SiWikibooks className="text-lg" />
@@ -194,9 +194,9 @@ const Dashboard = () => {
                                     <>
                                         <li>
                                             <Link
-                                                to="/dashboard/all-user"
+                                                to="/dashboard/allUser"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/all-user"
+                                                    "/dashboard/allUser"
                                                 )}`}
                                             >
                                                 <GrUserManager className="text-lg" />
@@ -205,9 +205,9 @@ const Dashboard = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to="/dashboard/manage-book"
+                                                to="/dashboard/manageBook"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/manage-book"
+                                                    "/dashboard/manageBook"
                                                 )}`}
                                             >
                                                 <FaBook className="text-lg" />
@@ -248,4 +248,4 @@ const Dashboard = () => {
         </div>
     );
 }
-    export default Dashboard;
+    export default DashboardLayout;

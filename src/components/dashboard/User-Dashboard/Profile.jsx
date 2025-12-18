@@ -1,6 +1,3 @@
-
-// import { imageUpload } from "../../../utils";
-// import { updateProfile } from "firebase/auth";
 import { useState } from "react";
 import UseAuth from "../../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
@@ -10,11 +7,14 @@ import Swal from "sweetalert2";
 import Loading from "../../../Pages/Loading";
 import { FaUser } from "react-icons/fa6";
 import { IoIosPhotos } from "react-icons/io";
+import { imageUpload } from "../../../utils/imageUpload"; 
+import { updateProfile } from "firebase/auth"; 
 
 const Profile = () => {
   const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
   const [isProfile, setIsProfile] = useState(false);
+
   const {
     data: userInfo = {},
     isLoading,
@@ -34,34 +34,38 @@ const Profile = () => {
     try {
       Swal.fire({
         title: "Updating...",
-        text: "Please wait",
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
       });
 
-      let imageURL = image;
+      let imageURL = userInfo.image; 
 
+      //  Upload new image if selected
       if (data.photo && data.photo.length > 0) {
         imageURL = await imageUpload(data.photo[0]);
       }
 
+      // 🔥 Update Firebase profile
       await updateProfile(user, {
         displayName: data.name,
         photoURL: imageURL,
       });
 
+      // 🔥 Update user info
       const updateData = {
         name: data.name,
         image: imageURL,
       };
 
-      const res = await axiosSecure.patch(`/users/${userInfo._id}`, updateData);
+      const res = await axiosSecure.patch(
+        `/users/${userInfo._id}`,
+        updateData
+      );
 
       if (res.data.modifiedCount > 0) {
         Swal.fire({
           icon: "success",
           title: "Profile Updated!",
-          text: "Your profile information has been updated successfully.",
           confirmButtonColor: "#16a34a",
         });
 
@@ -71,17 +75,14 @@ const Profile = () => {
       } else {
         Swal.fire({
           icon: "info",
-          title: "No Changes",
-          text: "Nothing was updated!",
-          confirmButtonColor: "#16a34a",
+          title: "No Changes Made",
         });
       }
     } catch (error) {
+      console.error(error);
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-        confirmButtonColor: "#dc2626",
+        title: "Update Failed",
       });
     }
   };
@@ -92,34 +93,36 @@ const Profile = () => {
 
   return (
     <>
-      <div className="max-w-lg mx-auto mt-10 p-6 bg-purple-50 shadow-lg rounded-lg border border-purple-400">
+      {/* Profile Card */}
+      <div className="max-w-lg mx-auto mt-10 p-6 bg-purple-50 shadow rounded-lg">
         <div className="flex flex-col items-center text-center">
           <img
             src={image}
             alt="Profile"
-            className="w-28 h-28 rounded-full border-2 border-purple-400 shadow"
+            className="w-28 h-28 rounded-full border shadow"
           />
 
-          <p className="border border-purple-400 rounded-full py-1 px-3 bg-purple-200 mt-1 text-gray-700 font-semibold">
+          <span className="mt-2 px-3 py-1 bg-gray-200 rounded-full font-semibold">
             {role}
-          </p>
+          </span>
 
           <h2 className="text-2xl font-semibold mt-3">{name}</h2>
           <p className="text-gray-600">{email}</p>
 
-          <div className="mt-5 w-full text-left space-y-2">
+          <div className="mt-4 w-full text-left text-sm space-y-1">
             <p>
-              <span className="font-semibold">Created:</span>{" "}
+              <b>Created:</b>{" "}
               {new Date(create_date).toLocaleString()}
             </p>
             <p>
-              <span className="font-semibold">Last Login:</span>{" "}
+              <b>Last Login:</b>{" "}
               {new Date(last_loggedIn).toLocaleString()}
             </p>
           </div>
+
           <button
             onClick={() => setIsProfile(true)}
-            className={`py-2 px-4 w-full mt-3 bg-purple-500 text-white font-semibold rounded-md cursor-pointer ${
+            className={`btn w-full mt-4 ${
               isProfile ? "hidden" : "block"
             }`}
           >
@@ -128,48 +131,34 @@ const Profile = () => {
         </div>
       </div>
 
+      {/* Update Form */}
       {isProfile && (
-        <div className="max-w-lg mx-auto mt-8 border border-purple-400 p-3 rounded-md">
+        <div className="max-w-lg mx-auto mt-8 border p-4 rounded-md">
           <form onSubmit={handleSubmit(handleProfileUpdate)}>
-            <div className="flex flex-col">
-              <label
-                htmlFor="name"
-                className="text-purple-700 font-semibold mb-1"
-              >
-                Full Name
-              </label>
-              <div className="flex items-center border border-purple-300 rounded p-2 focus-within:ring-2 focus-within:ring-purple-400">
-                <FaUser className="text-purple-500 mr-2" />
-                <input
-                  {...register("name")}
-                  type="text"
-                  defaultValue={userInfo?.name}
-                  id="name"
-                  placeholder="Full Name"
-                  className="w-full outline-none bg-transparent"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col mt-3">
-              <label
-                htmlFor="photo"
-                className="text-purple-700 font-semibold mb-1"
-              >
-                Your Photo
-              </label>
-              <div className="flex items-center border border-purple-300 rounded p-2 focus-within:ring-2 focus-within:ring-purple-400">
-                <IoIosPhotos className="text-purple-500 mr-2" />
-                <input
-                  {...register("photo")}
-                  type="file"
-                  id="photo"
-                  className="w-full outline-none bg-transparent"
-                />
-              </div>
+            <label className="font-semibold">Full Name</label>
+            <div className="flex items-center border p-2 rounded">
+              <FaUser className="mr-2" />
+              <input
+                {...register("name")}
+                defaultValue={name}
+                className="w-full outline-none"
+              />
             </div>
 
-            <button className="py-2 px-4 w-full mt-3 bg-purple-500 text-white font-semibold rounded-md">
-              Update Profile
+            <label className="font-semibold mt-3 block">
+              Profile Photo
+            </label>
+            <div className="flex items-center border p-2 rounded">
+              <IoIosPhotos className="mr-2" />
+              <input
+                {...register("photo")}
+                type="file"
+                className="w-full"
+              />
+            </div>
+
+            <button className="btn w-full mt-4">
+              Save Changes
             </button>
           </form>
         </div>

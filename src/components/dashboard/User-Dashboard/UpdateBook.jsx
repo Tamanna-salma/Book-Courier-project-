@@ -3,28 +3,10 @@ import { FaCalendarAlt, FaFileAlt, FaSortNumericDown } from "react-icons/fa";
 import { FaBook, FaDollarSign, FaImage, FaLanguage, FaLayerGroup, FaUser } from "react-icons/fa6";
 import { useParams } from "react-router";
 import Swal from "sweetalert2";
-import UseAuth from "../components/Hooks/UseAuth";
-import UseAxiosSecure from "../components/Hooks/UseAxiosSecure";
+import UseAuth from "../../Hooks/UseAuth";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
-// import { useForm } from "react-hook-form";
-// import {
-//   FaBook,
-//   FaUser,
-//   FaCalendarAlt,
-//   FaLanguage,
-//   FaDollarSign,
-//   FaFileAlt,
-//   FaImage,
-//   FaLayerGroup,
-//   FaSortNumericDown,
-// } from "react-icons/fa";
-// import { imageUpload } from "../../../utils";
-// import Swal from "sweetalert2";
-// import useAuth from "../../../hooks/useAuth";
-// import useAxiosSecure from "../../../hooks/useAxiosSecure";
-// import { useParams } from "react-router";
-// import { useQuery } from "@tanstack/react-query";
 
 const UpdateBook = () => {
     const { id } = useParams();
@@ -35,7 +17,7 @@ const UpdateBook = () => {
     const { data: updateBooks = {} } = useQuery({
         queryKey: ["updateBooks", id],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/update-book/${id}`);
+            const res = await axiosSecure.get(`/updateBook/${id}`);
             return res.data;
         },
     });
@@ -113,19 +95,6 @@ const UpdateBook = () => {
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaFileAlt className="text-purple-500" /> ISBN
-                    </label>
-                    <input
-                        {...register("isbn", { required: true })}
-                        type="text"
-                        defaultValue={updateBooks.isbn}
-                        placeholder="Enter ISBN number"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    />
-                </div>
-
-                <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
                         <FaUser className="text-purple-500" /> Publisher
                     </label>
                     <input
@@ -152,42 +121,16 @@ const UpdateBook = () => {
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaSortNumericDown className="text-purple-500" /> Number of Pages
+                        <FaSortNumericDown className="text-purple-500" /> Total page
                     </label>
                     <input
-                        defaultValue={updateBooks.pageNumber}
+                        defaultValue={updateBooks. totalPages}
                         {...register("pageNumber", { required: true })}
                         type="number"
                         placeholder="Enter total pages"
                         className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     />
-                </div>
-
-                <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLanguage className="text-purple-500" /> Language
-                    </label>
-                    <input
-                        defaultValue={updateBooks.language}
-                        {...register("language", { required: true })}
-                        type="text"
-                        placeholder="Enter language"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    />
-                </div>
-
-                <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="text-purple-500" /> Genre
-                    </label>
-                    <input
-                        defaultValue={updateBooks.genre}
-                        {...register("genre", { required: true })}
-                        type="text"
-                        placeholder="Enter genre"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    />
-                </div>
+                </div>          
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
@@ -217,19 +160,6 @@ const UpdateBook = () => {
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaFileAlt className="text-purple-500" /> Edition
-                    </label>
-                    <input
-                        defaultValue={updateBooks?.edition}
-                        {...register("edition", { required: true })}
-                        type="text"
-                        placeholder="Enter edition"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    />
-                </div>
-
-                <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
                         <FaLayerGroup className="text-purple-500" /> Format
                     </label>
                     <input
@@ -250,6 +180,18 @@ const UpdateBook = () => {
                         {...register("category", { required: true })}
                         type="text"
                         placeholder="Enter category"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    />
+                </div>
+                <div>
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
+                        <FaLayerGroup className="text-purple-500" /> tags
+                    </label>
+                    <input
+                        defaultValue={updateBooks.tags}
+                        {...register("tags", { required: true })}
+                        type="text"
+                        placeholder="Enter tags"
                         className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     />
                 </div>
