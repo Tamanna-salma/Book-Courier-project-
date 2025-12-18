@@ -11,82 +11,145 @@ import BookDetails from "../Pages/books/BookDetails";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
-import Payment from "../Layout/dashboard/User-Dashboard/payment/PaymentSuccess";
-import LibrarianDeshboard from "../Layout/dashboard/Librarian-Dashboard/LibrarianDeshboard";
+import DashBoardRoot from "../Layout/dashboard/DashBoardRoot";
+import CustomerRoute from "./privateRoute/CustomerRoute";
+import PaymentSuccess from "../Layout/dashboard/User-Dashboard/payment/PaymentSuccess";
+import Invoices from "../Layout/dashboard/User-Dashboard/Invoices";
+import WishList from "../Layout/dashboard/WishList";
+import LibrarianRoute from "./privateRoute/LibrarianRoute";
+import MyBook from "../Layout/dashboard/Librarian-Dashboard/MyBook";
+import UpdateBook from "../Layout/UpdateBook";
+import Orders from "../Layout/dashboard/Librarian-Dashboard/Orders";
+import Profile from "../Layout/dashboard/User-Dashboard/Profile";
 
 
- const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout></RootLayout>,
-    children:[
+    children: [
       {
-        index:true,
-        element:<Home></Home>
+        index: true,
+        element: <Home></Home>
       },
       {
-        path:"/allbooks",
-        element:<AllBooks></AllBooks>
+        path: "/allbooks",
+        element: <AllBooks></AllBooks>
       },
       {
-        path:'/about',
-        element:<About></About>
+        path: '/about',
+        element: <About></About>
 
       },
-      
+
       {
-        path:'/bookDetails/:id',
-        loader:({params})=>fetch(`http://localhost:3000/Books/${params.id}`),
-        element:<PrivateRoute>
+        path: '/bookDetails/:id',
+        loader: ({ params }) => fetch(`http://localhost:3000/Books/${params.id}`),
+        element: <PrivateRoute>
           <BookDetails></BookDetails>
         </PrivateRoute>
 
       },
-     
+
     ]
   },
 
   {
-    path:'/auth',
-    element:<AuthLayout></AuthLayout>,
-    children:[
+    path: '/auth',
+    element: <AuthLayout></AuthLayout>,
+    children: [
       {
-        path:'/auth/login',
-        element:<Login></Login>
+        path: '/auth/login',
+        element: <Login></Login>
       },
       {
-        path:'/auth/register',
-        element:<Register></Register>
+        path: '/auth/register',
+        element: <Register></Register>
       },
     ]
   },
-   {
-        path:"/dashboard",
-        element:<PrivateRoute>
-          <Dashboard></Dashboard>
-        </PrivateRoute>,
-        children:[
-          {
-            path:'myorders',
-            element:<MyOrders></MyOrders>
-          },
-          
-         
-          {
-            path:'payment/:ordersId',
-            element:<Payment></Payment>
-         
-          },
-          {
-            path:'librarian',
-            element:<LibrarianDeshboard></LibrarianDeshboard>
-          }
-        ]
-        
-      },
   {
-    path:"/*",
-    element:<Error></Error>
+    path: "/dashboard",
+    element: <PrivateRoute>
+      <Dashboard></Dashboard>
+    </PrivateRoute>,
+    children: [
+      {
+        index: true,
+        element: <DashBoardRoot></DashBoardRoot>,
+      },
+
+
+      {
+        path: 'myOrders',
+        element: <CustomerRoute>
+          <MyOrders></MyOrders>
+        </CustomerRoute>
+
+      },
+      {
+        path: "paymentSuccess",
+        element: <CustomerRoute>
+          <PaymentSuccess></PaymentSuccess>
+        </CustomerRoute>
+      },
+      {
+        path: "invoices",
+        element: <CustomerRoute>
+          <Invoices></Invoices>
+        </CustomerRoute>
+      },
+      {
+        path: "wishlist",
+        element: <CustomerRoute>
+          <WishList></WishList>
+        </CustomerRoute>
+      },
+      {
+        path: 'add-books',
+        element: <LibrarianRoute>
+          <AddBook></AddBook>
+        </LibrarianRoute>
+      },
+      {
+        path: 'mybooks',
+        element: <LibrarianRoute>
+          <MyBook></MyBook>
+        </LibrarianRoute>
+
+      },
+      {
+        path: 'updateBook/:id',
+        element: <LibrarianRoute>
+          <UpdateBook></UpdateBook>
+        </LibrarianRoute>
+
+      },
+      {
+        path: 'orders',
+        element: <LibrarianRoute>
+          <Orders></Orders>
+        </LibrarianRoute>
+
+      },
+      {
+        path: 'profile',
+        element: <LibrarianRoute>
+          <Profile></Profile>
+        </LibrarianRoute>
+
+      },
+      //admin
+      {
+        
+      }
+
+    ]
+
+  },
+  {
+    path: "/*",
+    element: <Error></Error>
   }
 ]);
- export default router;
+export default router;
