@@ -13,7 +13,7 @@ import About from "../Pages/About";
 import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
 import Payment from "../Layout/dashboard/User-Dashboard/payment/PaymentSuccess";
 import LibrarianDeshboard from "../Layout/dashboard/Librarian-Dashboard/LibrarianDeshboard";
-import WishList from "../Pages/WishList";
+
 
  const router = createBrowserRouter([
   {
@@ -70,11 +70,7 @@ import WishList from "../Pages/WishList";
             path:'myorders',
             element:<MyOrders></MyOrders>
           },
-          {
-            path:'wishlist',
-            element:<WishList></WishList>
-
-          },
+          
          
           {
             path:'payment/:ordersId',
