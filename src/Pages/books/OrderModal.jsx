@@ -28,7 +28,7 @@ const OrderModal = ({ book, user, closeModal }) => {
       .then((data) => {
         toast.success("Order placed successfully!");
         closeModal();
-        console.log("New Order ID:", data.insertedId); // এখানে order id দেখতে পারো
+        console.log("New Order ID:", data.insertedId); 
       })
       .catch((err) => toast.error("Failed to place order: " + err.message));
   };

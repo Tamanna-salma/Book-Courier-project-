@@ -36,7 +36,7 @@ const ManageBook = () => {
         refetch();
       }
     } catch (error) {
-      Swal.fire("Error!", "Something went wrong.", "error");
+      Swal.fire("Error!", "Something went wrong.", "error",error);
     }
   };
 

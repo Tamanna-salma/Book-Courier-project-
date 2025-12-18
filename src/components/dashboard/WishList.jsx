@@ -51,7 +51,7 @@ const WishList = () => {
           title: "Error!",
           text: "Something went wrong. Please try again.",
           icon: "error",
-          confirmButtonText: "OK",
+          confirmButtonText: "OK" ,error
         });
       }
     }

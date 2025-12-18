@@ -69,7 +69,9 @@ const UpdateBook = () => {
                 confirmButtonColor: "#22c55e",
             });
             reset();
-        } catch (error) {}
+        } catch (error) {
+            
+        }
     };
     return (
         <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
