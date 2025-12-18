@@ -1,127 +1,119 @@
-import React from 'react'
-import UseAuth from '../../../components/Hooks/UseAuth';
-import { useQuery } from '@tanstack/react-query';
-import Swal from 'sweetalert2';
-import { FaMagnifyingGlass, FaTrashCan } from 'react-icons/fa6';
-import { FiEdit } from 'react-icons/fi';
-import UseAxiosSecure from '../../../components/Hooks/UseAxiosSecure';
-import { Link } from 'react-router';
+import React from "react";
+import UseAuth from "../../../components/Hooks/UseAuth";
+import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const MyOrders = () => {
-    const { user } = UseAuth();
-    const axiosSecure = UseAxiosSecure();
-    const { data: orders = [], refetch } = useQuery({
-        queryKey: ['myorders', user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/orders?email=${user?.email}`);
-            return res.data;
-        }
-    })
-    //delate
-    const handleParcelDelete = id => {
-        console.log(id);
+  const { user } = UseAuth();
+  const axiosSecure = UseAxiosSecure();
+  const {
+    data: orders = [],
+    
+    refetch,
+  } = useQuery({
+    queryKey: ["orders", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/orders/${user?.email}`);
+      return res.data;
+    },
+  });
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
+  return (
+    <div>
+      <h2 className="text-center text-3xl md:text-4xl font-bold text-purple-500">
+        My All Books
+      </h2>
+      <div className=" px-4 sm:px-8">
+        <div className="pb-8 pt-2">
+          <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+            <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+              <table className="min-w-full leading-normal">
+                <thead>
+                  <tr className="bg-purple-200">
+                    <th
+                      scope="col"
+                      className="px-5 py-3  text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Customar Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Book Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-5 py-3  text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Author Name
+                    </th>
 
-                axiosSecure.delete(`/orders/${id}`)
-                    .then(res => {
-                        console.log(res.data);
+                    <th
+                      scope="col"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Customar Email
+                    </th>
 
-                        if (res.data.deletedCount) {
-                            // refresh the data in the ui
-                            refetch();
+                    <th
+                      scope="col"
+                      className="px-5 py-3 text-nowrap   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Payment Status
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Delivery Status
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Price
+                    </th>
 
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your orders request has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
-            }
-        })
-    }
+                    <th
+                      scope="col"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Quantity
+                    </th>
 
-    const handlePayment = async (order) => {
-        const paymentInfo = {
-            price: order.price,
-            orderId: order._id,
-            userEmail: order.userEmail,
-            bookName: order.bookName,
-        }
-        const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
+                    <th
+                      scope="col"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Order Date
+                    </th>
 
-        console.log(res.data.url);
-        window.location.assign(res.data.url);
-    };
-
-    return (
-        <div>
-            <h2 className='px-4 '>All of my Orders : {orders.length}</h2>
-            <div className="overflow-x-auto">
-                <table className="table table-zebra">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>BookName</th>
-                            <th>Cost</th>
-                            <th>Payment Status</th>
-                            <th>Delivery Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            orders.map((order, index) => <tr key={order._id}>
-                                <th>{index + 1}</th>
-                                <td>{order.bookName}</td>
-                                <td>$ {order.price}</td>
-                                <td>
-                                    {
-                                        order.paymentStatus === 'paid' ?
-
-                                            <span className='text-green-400'>Paid</span>
-                                            :
-                                            <Link to={`/dashboard/payment/${order._id}`}>
-                                                <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
-                                            </Link>
-                                        //  <button onClick={() => handlePayment(order)} className="btn btn-sm bg-purple-700 hover:bg-purple-900 text-white">Pay</button>
-
-                                    }
-
-                                </td>
-                               <td>{order.status}</td>
-                                <td>
-                                    <button className='btn btn-square hover:bg-purple-400'>
-                                        <FaMagnifyingGlass />
-                                    </button>
-                                    <button className='btn btn-square hover:bg-purple-400 mx-2'>
-                                        <FiEdit></FiEdit>
-                                    </button>
-                                    <button onClick={() => handleParcelDelete(order._id)}
-                                        className='btn btn-square hover:bg-purple-400'>
-                                        <FaTrashCan />
-                                    </button>
-                                </td>
-                            </tr>)
-                        }
-
-                    </tbody>
-                </table>
+                    <th
+                      scope="col"
+                      className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders?.map((order) => (
+                    <OrderTableRow
+                      order={order}
+                      key={order._id}
+                      refetch={refetch}
+                    />
+                  ))}
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default MyOrders;
