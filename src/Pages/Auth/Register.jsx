@@ -5,7 +5,7 @@ import UseAuth from "../../components/Hooks/UseAuth";
 import SocialLogin from "../SocialLogin";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { imageUpload } from "../../utils/imageUpload"; 
+
 
 const Register = () => {
   const [toggle, setToggle] = useState(false);

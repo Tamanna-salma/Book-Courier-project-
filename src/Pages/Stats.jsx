@@ -10,14 +10,21 @@ const stats = [
 const Stats = () => {
   return (
     <section className="py-16 bg-purple-500 mt-4 mb-4 text-white overflow-hidden">
-      {/* marquee container */}
+    
+      <div className="text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold">Our Achievements</h2>
+        <p className="mt-2 text-white/80">
+          Here's why Book Courier is trusted by thousands of book lovers.
+        </p>
+      </div>
+
+      {/* Marquee container */}
       <div className="relative w-full overflow-hidden">
         <motion.div
           className="flex gap-16 whitespace-nowrap"
           animate={{ x: ["0%", "-100%"] }}
           transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
         >
-          
           {[...stats, ...stats].map((item, i) => (
             <div
               key={i}

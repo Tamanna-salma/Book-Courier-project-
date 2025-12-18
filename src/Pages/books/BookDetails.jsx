@@ -4,6 +4,7 @@ import UseAuth from "../../components/Hooks/UseAuth";
 import OrderModal from "./OrderModal";
 import Loading from "../Loading";
 import Dataimg from "../../assets/data.jpeg";
+import BookRating from "../../components/Bookrating/BookRating";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ const BookDetails = () => {
 
 
   return (
-    <div className="max-w-5xl mx-auto px-4 my-12 border">
+    <div className="max-w-5xl mx-auto px-4 my-12">
       <h2 className="text-xl lg:text-3xl px-4 font-bold mb-6">
         {book.bookName}
       </h2>
@@ -61,7 +62,7 @@ const BookDetails = () => {
           <p className="text-gray-600 mt-2 "> Published   : {book.yearOfPublishing}
           </p>
          </div>
-         <p className="text-gray-600 mt-2 ">Review    : {book.review}</p>
+         <p className="text-gray-600 mt-2 ">description   : {book.review}</p>
           <div>
             <p className="text-gray-600 mt-2 ">Pages   : {book.totalPages}</p>
              <p className="text-2xl font-bold mt-4 flex justify-between text-purple-700">
@@ -74,13 +75,13 @@ const BookDetails = () => {
 
           <div className="flex justify-between">
             <button
-            className="btn bg-purple-700  text-white mb-2 mt-5"
+            className="btn bg-purple-600 hover:bg-purple-800 text-white mb-2 mt-5"
             onClick={() => setOpenModal(true)}
           >
             Order Now
           </button>
           <Link to="/wishlist"
-            className="btn bg-purple-700 font-bold  text-white mb-2 mt-5">
+            className="btn bg-purple-600  hover:bg-purple-800 font-bold  text-white mb-2 mt-5">
            Wish-List
           </Link>
           </div>
@@ -94,6 +95,7 @@ const BookDetails = () => {
           closeModal={() => setOpenModal(false)}
         />
       )}
+      <BookRating book={book}></BookRating>
     </div>
   );
 };

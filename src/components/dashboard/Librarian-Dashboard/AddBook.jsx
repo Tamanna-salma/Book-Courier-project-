@@ -3,8 +3,9 @@ import UseAuth from "../../../components/Hooks/UseAuth";
 import { useForm } from "react-hook-form";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
-import { FaBook, FaDollarSign, FaImage, FaLanguage, FaLayerGroup, FaUser } from "react-icons/fa6";
-import { FaCalendarAlt, FaFileAlt, FaSortNumericDown } from "react-icons/fa";
+import { FaBook, FaDollarSign, FaImage,  FaLayerGroup, FaUser } from "react-icons/fa6";
+import { FaRegCalendarAlt, FaSortNumericDown } from "react-icons/fa";
+import { imageUpload } from "../../../utilites";
 
 
 const AddBook = () => {
@@ -20,7 +21,7 @@ const AddBook = () => {
       yearOfPublishing,
      totalPages,  
       price,
-      stockQuantity,
+      stock,
       category,
       status,
       tags,
@@ -39,7 +40,7 @@ const AddBook = () => {
       yearOfPublishing,
      totalPages,  
       price,
-      stockQuantity,
+      stock,
       category,
       status,
       tags,
@@ -55,7 +56,10 @@ const AddBook = () => {
         confirmButtonColor: "#22c55e",
       });
       reset();
-    } catch (error) {}
+    } catch (error) {
+        Swal.fire({ title: "Error adding book!", icon: "error",error });
+
+    }
   };
   return (
     <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
@@ -105,7 +109,7 @@ const AddBook = () => {
 
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaCalendarAlt className="text-purple-500" /> Published Year
+            <FaRegCalendarAlt className="text-purple-500" /> Published Year
           </label>
           <input
             {...register("publishedYear", { required: true })}

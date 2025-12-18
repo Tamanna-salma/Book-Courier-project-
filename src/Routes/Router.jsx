@@ -8,22 +8,23 @@ import Error from "../Pages/Error";
 import BookDetails from "../Pages/books/BookDetails";
 import AllBooks from "../Pages/AllBooks";
 import About from "../Pages/About";
-import MyOrders from "../Layout/dashboard/User-Dashboard/MyOrders";
 import CustomerRoute from "./privateRoute/CustomerRoute";
-import PaymentSuccess from "../Layout/dashboard/User-Dashboard/payment/PaymentSuccess";
-import Invoices from "../Layout/dashboard/User-Dashboard/Invoices";
-import WishList from "../Layout/dashboard/WishList";
 import LibrarianRoute from "./privateRoute/LibrarianRoute";
-import MyBook from "../Layout/dashboard/Librarian-Dashboard/MyBook";
-import UpdateBook from "../Layout/UpdateBook";
-import Orders from "../Layout/dashboard/Librarian-Dashboard/Orders";
-import Profile from "../Layout/dashboard/User-Dashboard/Profile";
 import AdminRoute from "./privateRoute/AdminRoute";
-import UserManagement from "../Layout/dashboard/AdminDashboard/UserManagement";
-import ManageBook from "../Layout/dashboard/AdminDashboard/ManageBook";
-import AddBook from "../Layout/dashboard/Librarian-Dashboard/AddBook";
 import DashboardLayout from "../Layout/DashboardLayout";
 import DashboardRoot from "../components/DashboardRoot/DashboardRoot";
+import PaymentSuccess from "../components/dashboard/User-Dashboard/payment/PaymentSuccess";
+import MyOrders from "../components/dashboard/User-Dashboard/MyOrders";
+import Invoices from "../components/dashboard/User-Dashboard/Invoices";
+import WishList from "../components/dashboard/WishList";
+import AddBook from "../components/dashboard/Librarian-Dashboard/AddBook";
+import MyBook from "../components/dashboard/Librarian-Dashboard/MyBook";
+import UpdateBook from "../components/dashboard/User-Dashboard/UpdateBook";
+import Orders from "../components/dashboard/Librarian-Dashboard/Orders";
+import Profile from "../components/dashboard/User-Dashboard/Profile";
+import ManageBook from "../components/dashboard/AdminDashboard/ManageBook";
+import UserManagement from "../components/dashboard/AdminDashboard/UserManagement";
+import PrivateRoute from "./PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -62,11 +63,11 @@ const router = createBrowserRouter([
     element: <AuthLayout></AuthLayout>,
     children: [
       {
-        path: '/auth/login',
+        path: 'login',
         element: <Login></Login>
       },
       {
-        path: '/auth/register',
+        path: 'register',
         element: <Register></Register>
       },
     ]
@@ -85,26 +86,26 @@ const router = createBrowserRouter([
       {
         path: 'myOrders',
         element: <CustomerRoute>
-          <MyOrders></MyOrders>
-        </CustomerRoute>
+        <MyOrders></MyOrders>
+       </CustomerRoute>
 
       },
       {
         path: "paymentSuccess",
         element: <CustomerRoute>
-          <PaymentSuccess></PaymentSuccess>
+         <PaymentSuccess></PaymentSuccess>
         </CustomerRoute>
       },
       {
         path: "invoices",
         element: <CustomerRoute>
-          <Invoices></Invoices>
+        <Invoices></Invoices>
         </CustomerRoute>
       },
       {
         path: "wishlist",
         element: <CustomerRoute>
-          <WishList></WishList>
+         <WishList></WishList>
         </CustomerRoute>
       }, 
 
@@ -112,48 +113,48 @@ const router = createBrowserRouter([
       {
         path: 'addbooks',
         element: <LibrarianRoute>
-        <AddBook></AddBook>
+       <AddBook></AddBook>
         </LibrarianRoute>
       },
       {
         path: 'mybooks',
         element: <LibrarianRoute>
-          <MyBook></MyBook>
+         <MyBook></MyBook>
         </LibrarianRoute>
 
       },
       {
         path: 'updateBook/:id',
         element: <LibrarianRoute>
-          <UpdateBook></UpdateBook>
+         <UpdateBook></UpdateBook>
         </LibrarianRoute>
 
       },
       {
         path: 'orders',
         element: <LibrarianRoute>
-          <Orders></Orders>
+         <Orders></Orders>
         </LibrarianRoute>
 
       },
       {
         path: 'profile',
         element: 
-          <Profile></Profile>  
+       <Profile></Profile>
 
       },
               //admin
       {
         path:'allUser',
         element:<AdminRoute>
-          <UserManagement></UserManagement>
+        <UserManagement></UserManagement>
         </AdminRoute>
 
       },
       {
         path:'manageBook',
         element:<AdminRoute>
-         <ManageBook></ManageBook>
+      <ManageBook></ManageBook>
         </AdminRoute>
 
       }

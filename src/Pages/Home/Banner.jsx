@@ -55,6 +55,12 @@ const Banner = () => {
             alt="bannerimg2"
             className="w-full h-96 md:h-[500px] object-cover"
           />
+          <div className="absolute inset-0 flex flex-col items-center justify-center mt-14 ">
+        
+              <Link to="/allbooks" className="mt-4 bg-purple-700 text-xl text-white px-8 py-5 rounded-lg font-bold hover:bg-purple-900  transition">
+               All Books
+              </Link>
+            </div>
         </SwiperSlide>
 
         {/* SLIDE 3 */}
@@ -64,6 +70,12 @@ const Banner = () => {
             alt="bannerImg3"
             className="w-full h-96 md:h-[500px] object-cover"
           />
+          <div className="absolute inset-0 flex flex-col items-center justify-center mt-14 ">
+        
+              <Link to="/allbooks" className="mt-4 bg-purple-700 text-xl text-white px-8 py-5 rounded-lg font-bold hover:bg-purple-900  transition">
+               All Books
+              </Link>
+            </div>
         </SwiperSlide>
 
         {/* SLIDE 4 */}
@@ -73,6 +85,12 @@ const Banner = () => {
             alt="bannerImg4"
             className="w-full h-96 md:h-[500px] object-cover"
           />
+          <div className="absolute inset-0 flex flex-col items-center justify-center mt-14 ">
+        
+              <Link to="/allbooks" className="mt-4 bg-purple-700 text-xl text-white px-8 py-5 rounded-lg font-bold hover:bg-purple-900  transition">
+               All Books
+              </Link>
+            </div>
         </SwiperSlide>
 
       </Swiper>

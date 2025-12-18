@@ -1,5 +1,4 @@
 import { useState } from "react";
-import UseAuth from "../../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -7,8 +6,9 @@ import Swal from "sweetalert2";
 import Loading from "../../../Pages/Loading";
 import { FaUser } from "react-icons/fa6";
 import { IoIosPhotos } from "react-icons/io";
-import { imageUpload } from "../../../utils/imageUpload"; 
+
 import { updateProfile } from "firebase/auth"; 
+import UseAuth from "../../Hooks/UseAuth";
 
 const Profile = () => {
   const { user } = UseAuth();

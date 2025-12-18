@@ -35,45 +35,45 @@ const Invoices = () => {
                     <tr className="bg-purple-200">
                       <th
                         scope="col"
-                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold  text-center"
                       >
                         Book Name
                       </th>
                       <th
                         scope="col"
-                        className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold  text-center"
                       >
                         Customer Name
                       </th>
                       <th
                         scope="col"
-                        className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3 text-nowrap  border-b border-gray-200 text-gray-800  font-semibold  text-center"
                       >
                         Customer Email
                       </th>
 
                       <th
                         scope="col"
-                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold   text-center"
                       >
                         Payment Id
                       </th>
 
                       <th
                         scope="col"
-                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold  text-center"
                       >
                         Status
                       </th>
                       <th
                         scope="col"
-                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold  text-center"
                       >
                         Price
                       </th>
                       <th
                         scope="col"
-                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold text-sm uppercase  text-center"
+                        className="px-5 py-3   border-b border-gray-200 text-gray-800  font-semibold   text-center"
                       >
                         Payment Date
                       </th>
