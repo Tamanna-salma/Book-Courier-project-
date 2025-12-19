@@ -3,6 +3,7 @@ import UseAuth from "../../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import Loading from "../../../Pages/Loading";
 import Swal from "sweetalert2";
+import MyBookTable from "./MyBookTable";
 
 const MyBook = () => {
   const { user } = UseAuth();
@@ -41,8 +42,8 @@ const MyBook = () => {
         refetch();
       }
     } catch (error) {
-      Swal.fire("Error!", "Something went wrong.", "error");
-      console.error(error);
+      Swal.fire("Error!", "Something went wrong.", "error",error);
+     
     }
   };
 
