@@ -7,6 +7,7 @@ import UseAuth from "../../Hooks/UseAuth";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
+import { imageUpload } from "../../../utilites";
 
 const UpdateBook = () => {
     const { id } = useParams();
@@ -17,7 +18,7 @@ const UpdateBook = () => {
     const { data: updateBooks = {} } = useQuery({
         queryKey: ["updateBooks", id],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/updateBook/${id}`);
+            const res = await axiosSecure.get(`/update-book/${id}`);
             return res.data;
         },
     });
@@ -28,7 +29,7 @@ const UpdateBook = () => {
             bookName,
             author,
             publisher,
-            yearOfPublishing,
+            publishedYear,
             totalPages,
             price,
             stockQuantity,
@@ -49,7 +50,7 @@ const UpdateBook = () => {
             bookName,
             author,
             publisher,
-            yearOfPublishing,
+           publishedYear,
             totalPages,
             price,
             stockQuantity,
@@ -79,8 +80,8 @@ const UpdateBook = () => {
         }
     };
     return (
-        <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-            <h1 className="text-3xl font-bold mb-8 text-center text-purple-600 ">
+        <div className="max-w-7xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
+            <h1 className="text-xl lg:text-3xl font-bold mb-8 text-center ">
                 Add a New Book
             </h1>
             <form
@@ -89,117 +90,117 @@ const UpdateBook = () => {
             >
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaBook className="text-purple-500" /> Book Name
+                        <FaBook className="" /> Book Name
                     </label>
                     <input
                         type="text"
                         defaultValue={updateBooks.bookName}
                         {...register("bookName", { required: true })}
                         placeholder="Enter book Name"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2"
                     />
                 </div>
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaUser className="text-purple-500" /> Publisher
+                        <FaUser className="" /> Publisher
                     </label>
                     <input
                         defaultValue={updateBooks.publisher}
                         {...register("publisher", { required: true })}
                         type="text"
                         placeholder="Enter publisher name"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2"
                     />
                 </div>
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaCalendarAlt className="text-purple-500" /> Published Year
+                        <FaCalendarAlt className="" /> Published Year
                     </label>
                     <input
                         defaultValue={updateBooks.publishedYear}
                         {...register("publishedYear", { required: true })}
                         type="number"
                         placeholder="Enter published year"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaSortNumericDown className="text-purple-500" /> Total page
+                        <FaSortNumericDown className="" /> Total page
                     </label>
                     <input
                         defaultValue={updateBooks. totalPages}
-                        {...register("pageNumber", { required: true })}
+                        {...register("totalPage", { required: true })}
                         type="number"
                         placeholder="Enter total pages"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>          
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaDollarSign className="text-purple-500" /> Price
+                        <FaDollarSign className="" /> Price
                     </label>
                     <input
                         defaultValue={updateBooks.price}
                         {...register("price", { required: true })}
                         type="number"
                         placeholder="Enter price"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaSortNumericDown className="text-purple-500" /> Stock Quantity
+                        <FaSortNumericDown className="" /> Stock Quantity
                     </label>
                     <input
                         defaultValue={updateBooks.stockQuantity}
                         {...register("stockQuantity", { required: true })}
                         type="number"
                         placeholder="Enter stock quantity"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2"
                     />
                 </div>
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="text-purple-500" /> Format
+                        <FaLayerGroup className="" /> Format
                     </label>
                     <input
                         defaultValue={updateBooks.format}
                         {...register("format", { required: true })}
                         type="text"
                         placeholder="Hardcover / Paperback / eBook"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
 
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="text-purple-500" /> Category
+                        <FaLayerGroup className="" /> Category
                     </label>
                     <input
                         defaultValue={updateBooks.category}
                         {...register("category", { required: true })}
                         type="text"
                         placeholder="Enter category"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
                 <div>
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="text-purple-500" /> tags
+                        <FaLayerGroup className="" /> tags
                     </label>
                     <input
                         defaultValue={updateBooks.tags}
                         {...register("tags", { required: true })}
                         type="text"
                         placeholder="Enter tags"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
 
@@ -209,7 +210,7 @@ const UpdateBook = () => {
                     </label>
                     <select
                         {...register("status", { required: true })}
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                         defaultValue={updateBooks?.status}
                     >
                         <option value="" disabled>
@@ -223,12 +224,12 @@ const UpdateBook = () => {
                 {/* Book Cover (full width) */}
                 <div className="md:col-span-2">
                     <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaImage className="text-purple-500" /> Book Cover
+                        <FaImage className="" /> Book Cover
                     </label>
                     <input
                         {...register("bookCover", { required: true })}
                         type="file"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
 
@@ -241,7 +242,7 @@ const UpdateBook = () => {
                         defaultValue={updateBooks?.description}
                         {...register("description", { required: true })}
                         placeholder="Enter book description"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
                     />
                 </div>
 
@@ -249,7 +250,7 @@ const UpdateBook = () => {
                 <div className="md:col-span-2">
                     <button
                         type="submit"
-                        className="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600 transition"
+                        className="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-800 transition"
                     >
                         Update Book
                     </button>

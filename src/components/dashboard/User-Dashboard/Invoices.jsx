@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import UseAuth from "../../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import Loading from "../../../Pages/Loading";
+import InvoicesTable from "../InvoicesTable";
 
 
 const Invoices = () => {

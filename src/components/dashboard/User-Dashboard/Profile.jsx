@@ -6,9 +6,9 @@ import Swal from "sweetalert2";
 import Loading from "../../../Pages/Loading";
 import { FaUser } from "react-icons/fa6";
 import { IoIosPhotos } from "react-icons/io";
-
 import { updateProfile } from "firebase/auth"; 
 import UseAuth from "../../Hooks/UseAuth";
+import { imageUpload } from "../../../utilites";
 
 const Profile = () => {
   const { user } = UseAuth();
@@ -42,7 +42,7 @@ const Profile = () => {
 
       //  Upload new image if selected
       if (data.photo && data.photo.length > 0) {
-        imageURL = await imageUpload(data.photo[0]);
+        imageURL = await  imageUpload(data.photo[0]);
       }
 
       // 🔥 Update Firebase profile

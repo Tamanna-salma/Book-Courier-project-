@@ -13,9 +13,9 @@ const MyBook = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["mybooks", user?.email],
+    queryKey: ["my-books", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/mybooks/${user?.email}`);
+      const res = await axiosSecure.get(`/my-books/${user?.email}`);
       return res.data;
     },
   });

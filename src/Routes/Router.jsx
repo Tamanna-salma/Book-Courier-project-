@@ -74,9 +74,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute>
-      <DashboardLayout></DashboardLayout>
-    </PrivateRoute>,
+    // element: <PrivateRoute>
+    //   <DashboardLayout></DashboardLayout>
+    // </PrivateRoute>,
+    element:<DashboardLayout></DashboardLayout>,
     children: [
       {
         index: true,
@@ -84,57 +85,64 @@ const router = createBrowserRouter([
       },
 
       {
-        path: 'myOrders',
-        element: <CustomerRoute>
-        <MyOrders></MyOrders>
-       </CustomerRoute>
-
+        path: 'my-orders',
+      //   element: <CustomerRoute>
+      //   <MyOrders></MyOrders>
+      //  </CustomerRoute>
+element:<MyOrders></MyOrders>,
       },
       {
-        path: "paymentSuccess",
-        element: <CustomerRoute>
-         <PaymentSuccess></PaymentSuccess>
-        </CustomerRoute>
+        path: "payment-success",
+        // element: <CustomerRoute>
+        //  <PaymentSuccess></PaymentSuccess>
+        // </CustomerRoute>
+        element:<PaymentSuccess></PaymentSuccess>
       },
       {
         path: "invoices",
-        element: <CustomerRoute>
-        <Invoices></Invoices>
-        </CustomerRoute>
+        // element: <CustomerRoute>
+        // <Invoices></Invoices>
+        // </CustomerRoute>
+        element:<Invoices></Invoices>
       },
       {
-        path: "wishlist",
-        element: <CustomerRoute>
-         <WishList></WishList>
-        </CustomerRoute>
+        path: "wish-list",
+        // element: <CustomerRoute>
+        //  <WishList></WishList>
+        // </CustomerRoute>
+        element:<WishList></WishList>
       }, 
 
       // Librarian
       {
-        path: 'addbooks',
-        element: <LibrarianRoute>
-       <AddBook></AddBook>
-        </LibrarianRoute>
+        path: 'add-books',
+      //   element: <LibrarianRoute>
+      //  <AddBook></AddBook>
+      //   </LibrarianRoute>
+      element:<AddBook></AddBook>
       },
       {
-        path: 'mybooks',
-        element: <LibrarianRoute>
-         <MyBook></MyBook>
-        </LibrarianRoute>
+        path: 'my-books',
+        // element: <LibrarianRoute>
+        //  <MyBook></MyBook>
+        // </LibrarianRoute>
+        element:<MyBook></MyBook>
 
       },
       {
-        path: 'updateBook/:id',
-        element: <LibrarianRoute>
-         <UpdateBook></UpdateBook>
-        </LibrarianRoute>
+        path: 'update-book/:id',
+        // element: <LibrarianRoute>
+        //  <UpdateBook></UpdateBook>
+        // </LibrarianRoute>
+        element:<UpdateBook></UpdateBook>
 
       },
       {
         path: 'orders',
-        element: <LibrarianRoute>
-         <Orders></Orders>
-        </LibrarianRoute>
+        // element: <LibrarianRoute>
+        //  <Orders></Orders>
+        // </LibrarianRoute>
+        element:<Orders></Orders>
 
       },
       {
@@ -145,17 +153,18 @@ const router = createBrowserRouter([
       },
               //admin
       {
-        path:'allUser',
-        element:<AdminRoute>
-        <UserManagement></UserManagement>
-        </AdminRoute>
-
+        path:'all-user',
+        // element:<AdminRoute>
+        // <UserManagement></UserManagement>
+        // </AdminRoute>
+element:<UserManagement></UserManagement>
       },
       {
-        path:'manageBook',
-        element:<AdminRoute>
-      <ManageBook></ManageBook>
-        </AdminRoute>
+        path:'manage-book',
+      //   element:<AdminRoute>
+      // <ManageBook></ManageBook>
+      //   </AdminRoute>
+      element:<ManageBook></ManageBook>
 
       }
 

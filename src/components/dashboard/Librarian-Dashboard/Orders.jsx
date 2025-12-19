@@ -4,6 +4,7 @@ import UseAuth from "../../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Pages/Loading";
+import OrderTable from "../OrderTable/OrderTable";
 
 
 const Orders = () => {

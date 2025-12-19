@@ -18,7 +18,7 @@ const AddBook = () => {
       bookName,
       author,
       publisher,
-      yearOfPublishing,
+     publishedYear,
      totalPages,  
       price,
       stock,
@@ -37,7 +37,8 @@ const AddBook = () => {
        bookName,
       author,
       publisher,
-      yearOfPublishing,
+      publishedYear,
+      
      totalPages,  
       price,
       stock,

@@ -9,11 +9,8 @@ const OrderTable = ({ orderPayment, refetch }) => {
   const {
     image,
     name,
-    authorEmail,
     authorName,
-    price,
-    customerName,
-    customerEmail,
+    price,  
     status,
     paymentStatus,
     order_date,

@@ -8,7 +8,7 @@ const LibrarianRoute = ({ children }) => {
 
   if (isRoleLoading) return <Loading />;
   if (role === "Librarian") return children;
-  return <Navigate to="/" replace="true" />;
+  return <Navigate to="/" replace />;
 };
 
 export default LibrarianRoute;
