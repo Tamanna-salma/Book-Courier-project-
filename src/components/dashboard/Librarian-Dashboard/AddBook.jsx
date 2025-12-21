@@ -16,12 +16,12 @@ const AddBook = () => {
   const handleBookAdd = async (data) => {
     const {
       bookName,
-      author,
+      authorName,
       publisher,
      publishedYear,
-     totalPages,  
+     pageNumber,  
       price,
-      stock,
+     stockQuantity,
       category,
       status,
       tags,
@@ -33,22 +33,22 @@ const AddBook = () => {
     try {
       const image = await imageUpload(imageFile);
 
-      const bookData = {
-       bookName,
-      author,
+     const bookData = {
+      bookName,
+      author: authorName, 
+      authorEmail: user?.email, 
       publisher,
-      publishedYear,
-      
-     totalPages,  
-      price,
-      stock,
+      publishedYear: parseInt(publishedYear),
+      totalPages: parseInt(pageNumber), 
+      price: parseFloat(price),
+      stock: parseInt(stockQuantity), 
       category,
       status,
-      tags,
+      tags: tags.split(',').map(tag => tag.trim()), 
       description,
-      bookCover,
-        image,
-      };
+      image,
+      create_date: new Date()
+    };
       await axiosSecure.post("/books", bookData);
       Swal.fire({
         title: `New Book added!`,
@@ -58,7 +58,11 @@ const AddBook = () => {
       });
       reset();
     } catch (error) {
-        Swal.fire({ title: "Error adding book!", icon: "error",error });
+        Swal.fire({
+  icon: "error",
+  title: "Error adding book!",
+  text: error.message || "Something went wrong",
+});
 
     }
   };
@@ -122,7 +126,7 @@ const AddBook = () => {
 
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-            <FaSortNumericDown className="text-purple-500" /> Total page
+            <FaSortNumericDown className="text-purple-500" /> pageNumber
           </label>
           <input
             {...register("pageNumber", { required: true })}

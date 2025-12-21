@@ -111,11 +111,11 @@ const DashboardLayout = () => {
                                     </Link>
                                 </li>
 
-                                {role === "customer" && (
+                                {/* {role === "customer" && ( */}
                                     <>
                                         <li>
                                             <Link
-                                                to="/dashboard/myOrders"
+                                                to="/dashboard/my-orders"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
                                                     "/dashboard/myOrders"
                                                 )}`}
@@ -137,9 +137,9 @@ const DashboardLayout = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to="/dashboard/wishlist"
+                                                to="/dashboard/wish-list"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/wishlist"
+                                                    "/dashboard/wish-list"
                                                 )}`}
                                             >
                                                 <FaHeartPulse className="text-lg" />
@@ -147,15 +147,15 @@ const DashboardLayout = () => {
                                             </Link>
                                         </li>
                                     </>
-                                )}
-
-                                {role === "Librarian" && (
+                                {/* )} */}
+{/* 
+                                {role === "Librarian" && ( */}
                                     <>
                                         <li>
                                             <Link
-                                                to="/dashboard/addbooks"
+                                                to="/dashboard/add-books"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/addbooks"
+                                                    "/dashboard/add-books"
                                                 )}`}
                                             >
                                                 <FaBook className="text-lg" />
@@ -164,9 +164,9 @@ const DashboardLayout = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to="/dashboard/mybooks"
+                                                to="/dashboard/my-books"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/mybooks"
+                                                    "/dashboard/my-books"
                                                 )}`}
                                             >
                                                 <SiWikibooks className="text-lg" />
@@ -187,16 +187,16 @@ const DashboardLayout = () => {
                                             </Link>
                                         </li>
                                     </>
-                                )}
+                                {/* )} */}
 
                                 {/* Admin */}
-                                {role === "admin" && (
+                                {/* {role === "admin" && ( */}
                                     <>
                                         <li>
                                             <Link
-                                                to="/dashboard/allUser"
+                                                to="/dashboard/all-user"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/allUser"
+                                                    "/dashboard/all-user"
                                                 )}`}
                                             >
                                                 <GrUserManager className="text-lg" />
@@ -205,9 +205,9 @@ const DashboardLayout = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to="/dashboard/manageBook"
+                                                to="/dashboard/manage-book"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/manageBook"
+                                                    "/dashboard/manage-book"
                                                 )}`}
                                             >
                                                 <FaBook className="text-lg" />
@@ -215,7 +215,7 @@ const DashboardLayout = () => {
                                             </Link>
                                         </li>
                                     </>
-                                )}
+                                {/* // )} */}
                             </div>
 
                             {/* Profile */}

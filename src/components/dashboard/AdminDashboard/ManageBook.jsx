@@ -3,6 +3,7 @@ import UseAxiosSecure from '../../../components/Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import Loading from '../../../Pages/Loading';
+import ManageBookTable from './ManageBookTable';
 
 const ManageBook = () => {
       const axiosSecure = UseAxiosSecure();
@@ -13,7 +14,7 @@ const ManageBook = () => {
   } = useQuery({
     queryKey: ["mange-books"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/mange-books`);
+      const res = await axiosSecure.get(`/manage-books`);
       return res.data;
     },
   });

@@ -79,10 +79,10 @@ const router = createBrowserRouter([
     // </PrivateRoute>,
     element:<DashboardLayout></DashboardLayout>,
     children: [
-      {
-        index: true,
-        element:<DashboardRoot></DashboardRoot> 
-      },
+      // {
+      //   index: true,
+      //   element:<DashboardRoot></DashboardRoot> 
+      // },
 
       {
         path: 'my-orders',
@@ -158,6 +158,7 @@ element:<MyOrders></MyOrders>,
         // <UserManagement></UserManagement>
         // </AdminRoute>
 element:<UserManagement></UserManagement>
+
       },
       {
         path:'manage-book',
