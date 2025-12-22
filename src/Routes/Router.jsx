@@ -74,75 +74,75 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    // element: <PrivateRoute>
-    //   <DashboardLayout></DashboardLayout>
-    // </PrivateRoute>,
-    element:<DashboardLayout></DashboardLayout>,
+    element: <PrivateRoute>
+      <DashboardLayout></DashboardLayout>
+    </PrivateRoute>,
+  
     children: [
-      // {
-      //   index: true,
-      //   element:<DashboardRoot></DashboardRoot> 
-      // },
+      {
+        index: true,
+        element:<DashboardRoot></DashboardRoot> 
+      },
 
       {
         path: 'my-orders',
-      //   element: <CustomerRoute>
-      //   <MyOrders></MyOrders>
-      //  </CustomerRoute>
-element:<MyOrders></MyOrders>,
+        element: <CustomerRoute>
+        <MyOrders></MyOrders>
+       </CustomerRoute>
+
       },
       {
         path: "payment-success",
-        // element: <CustomerRoute>
-        //  <PaymentSuccess></PaymentSuccess>
-        // </CustomerRoute>
-        element:<PaymentSuccess></PaymentSuccess>
+        element: <CustomerRoute>
+         <PaymentSuccess></PaymentSuccess>
+        </CustomerRoute>
+        
       },
       {
         path: "invoices",
-        // element: <CustomerRoute>
-        // <Invoices></Invoices>
-        // </CustomerRoute>
-        element:<Invoices></Invoices>
+        element: <CustomerRoute>
+        <Invoices></Invoices>
+        </CustomerRoute>
+       
       },
       {
         path: "wish-list",
-        // element: <CustomerRoute>
-        //  <WishList></WishList>
-        // </CustomerRoute>
-        element:<WishList></WishList>
+        element: <CustomerRoute>
+         <WishList></WishList>
+        </CustomerRoute>
+        
       }, 
 
       // Librarian
       {
         path: 'add-books',
-      //   element: <LibrarianRoute>
-      //  <AddBook></AddBook>
-      //   </LibrarianRoute>
-      element:<AddBook></AddBook>
+        element: <LibrarianRoute>
+       <AddBook></AddBook>
+        </LibrarianRoute>
+     
       },
       {
         path: 'my-books',
-        // element: <LibrarianRoute>
-        //  <MyBook></MyBook>
-        // </LibrarianRoute>
-        element:<MyBook></MyBook>
+        element: <LibrarianRoute>
+         <MyBook></MyBook>
+        </LibrarianRoute>
+     
 
       },
       {
         path: 'update-book/:id',
-        // element: <LibrarianRoute>
-        //  <UpdateBook></UpdateBook>
-        // </LibrarianRoute>
-        element:<UpdateBook></UpdateBook>
+        element: <LibrarianRoute>
+         <UpdateBook></UpdateBook>
+        </LibrarianRoute>
+      
 
       },
       {
         path: 'orders',
-        // element: <LibrarianRoute>
-        //  <Orders></Orders>
-        // </LibrarianRoute>
-        element:<Orders></Orders>
+        element: <LibrarianRoute>
+         <Orders></Orders>
+        </LibrarianRoute>
+       
 
       },
       {
@@ -154,18 +154,18 @@ element:<MyOrders></MyOrders>,
               //admin
       {
         path:'all-user',
-        // element:<AdminRoute>
-        // <UserManagement></UserManagement>
-        // </AdminRoute>
-element:<UserManagement></UserManagement>
+        element:<AdminRoute>
+        <UserManagement></UserManagement>
+        </AdminRoute>
+
 
       },
       {
         path:'manage-book',
-      //   element:<AdminRoute>
-      // <ManageBook></ManageBook>
-      //   </AdminRoute>
-      element:<ManageBook></ManageBook>
+        element:<AdminRoute>
+      <ManageBook></ManageBook>
+        </AdminRoute>
+     
 
       }
 

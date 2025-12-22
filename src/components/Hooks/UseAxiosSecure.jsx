@@ -5,30 +5,35 @@ import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:3000",
-  withCredentials: true,
+ 
 });
 
 const UseAxiosSecure = () => {
-  const { user, logoutUserFunc } = UseAuth();
+  const {  logOut ,user} = UseAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Request interceptor: JWT attach
     const requestInterceptor = axiosSecure.interceptors.request.use(
       (config) => {
-        if (user?.accessToken) {
-          config.headers.Authorization = `Bearer ${user.accessToken}`;
+        const token = user?.accessToken;
+        if (token) {
+          config.headers.Authorization = `Bearer ${user?.accessToken}`;
         }
         return config;
       },
       (error) => Promise.reject(error)
     );
 
+    // Response interceptor: 401/403 handle
     const responseInterceptor = axiosSecure.interceptors.response.use(
       (res) => res,
-      (err) => {
+      async (err) => {
         if (err?.response?.status === 401 || err?.response?.status === 403) {
-          logoutUserFunc().catch(console.error);
-          navigate("/login");
+          await  logOut();
+          localStorage.removeItem("access-token");
+          navigate("/auth/login");
         }
         return Promise.reject(err);
       }
@@ -38,7 +43,7 @@ const UseAxiosSecure = () => {
       axiosSecure.interceptors.request.eject(requestInterceptor);
       axiosSecure.interceptors.response.eject(responseInterceptor);
     };
-  }, [user, logoutUserFunc, navigate]);
+  }, [logOut, navigate,user]);
 
   return axiosSecure;
 };

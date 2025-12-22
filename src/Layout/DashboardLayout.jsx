@@ -16,7 +16,7 @@ const DashboardLayout = () => {
     const { pathname } = useLocation();
     const { user, logoutUserFunc, loading } = UseAuth();
     const navigate = useNavigate();
-    const [role] = useRole();
+    const {role} = useRole();
 
     const isActive = (path) =>
         pathname === path
@@ -111,13 +111,13 @@ const DashboardLayout = () => {
                                     </Link>
                                 </li>
 
-                                {/* {role === "customer" && ( */}
+                               {role === "customer" && ( 
                                     <>
                                         <li>
                                             <Link
                                                 to="/dashboard/my-orders"
                                                 className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive(
-                                                    "/dashboard/myOrders"
+                                                    "/dashboard/my-orders"
                                                 )}`}
                                             >
                                                 <FaJediOrder className="text-lg" />
@@ -147,9 +147,9 @@ const DashboardLayout = () => {
                                             </Link>
                                         </li>
                                     </>
-                                {/* )} */}
-{/* 
-                                {role === "Librarian" && ( */}
+                                 )} 
+
+                                {role === "Librarian" && ( 
                                     <>
                                         <li>
                                             <Link
@@ -187,10 +187,10 @@ const DashboardLayout = () => {
                                             </Link>
                                         </li>
                                     </>
-                                {/* )} */}
+                                 )} 
 
                                 {/* Admin */}
-                                {/* {role === "admin" && ( */}
+                               {role === "admin" && ( 
                                     <>
                                         <li>
                                             <Link
@@ -215,7 +215,7 @@ const DashboardLayout = () => {
                                             </Link>
                                         </li>
                                     </>
-                                {/* // )} */}
+                                 )} 
                             </div>
 
                             {/* Profile */}

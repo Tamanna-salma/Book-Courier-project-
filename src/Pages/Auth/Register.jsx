@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
@@ -5,6 +6,7 @@ import UseAuth from "../../components/Hooks/UseAuth";
 import SocialLogin from "../SocialLogin";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { imageUpload } from "../../utilites";
 
 
 const Register = () => {

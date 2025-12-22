@@ -50,7 +50,7 @@ const BookDetails = () => {
           alt={book.bookName}
         />
         <div className="px-5">
-          <h3 className="text-xl font-semibold mt-2"><span className="font-bold ">Author </span> : {book.author}</h3>
+          <h3 className="text-xl font-semibold mt-2"><span className="font-bold ">Author </span> : {book.authorName}</h3>
           <h3 className="text-xl font-semibold mt-2"><span className="font-bold ">Author-Email </span> : {book.email}</h3>
           <div className="flex justify-between">
           <p className="text-gray-600 mt-2">Category  : {book.category}</p>
@@ -59,12 +59,12 @@ const BookDetails = () => {
 
          <div className="flex justify-between">
            <p className="text-gray-600 mt-2 ">Publisher   : {book.publisher}</p>
-          <p className="text-gray-600 mt-2 "> Published   : {book.yearOfPublishing}
+          <p className="text-gray-600 mt-2 "> Published   : {book.publishedYear}
           </p>
          </div>
-         <p className="text-gray-600 mt-2 ">description   : {book.review}</p>
+         <p className="text-gray-600 mt-2 ">description   : {book. description}</p>
           <div>
-            <p className="text-gray-600 mt-2 ">Pages   : {book.totalPages}</p>
+            <p className="text-gray-600 mt-2 ">Pages   : {book.pageNumber}</p>
              <p className="text-2xl font-bold mt-4 flex justify-between text-purple-700">
             Price: ${book.price}
             <span className="text-orange-500 font-medium">

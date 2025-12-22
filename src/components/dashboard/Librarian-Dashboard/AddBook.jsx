@@ -35,19 +35,19 @@ const AddBook = () => {
 
      const bookData = {
       bookName,
-      author: authorName, 
+      authorName ,
       authorEmail: user?.email, 
       publisher,
       publishedYear: parseInt(publishedYear),
-      totalPages: parseInt(pageNumber), 
+      pageNumber: parseInt(pageNumber), 
       price: parseFloat(price),
-      stock: parseInt(stockQuantity), 
+     stockQuantity: parseInt(stockQuantity), 
       category,
       status,
       tags: tags.split(',').map(tag => tag.trim()), 
       description,
       image,
-      create_date: new Date()
+     
     };
       await axiosSecure.post("/books", bookData);
       Swal.fire({
@@ -63,6 +63,7 @@ const AddBook = () => {
   title: "Error adding book!",
   text: error.message || "Something went wrong",
 });
+
 
     }
   };
