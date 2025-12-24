@@ -1,82 +1,67 @@
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { useState } from "react";
+import React from 'react';
+import Swal from 'sweetalert2';
+import UseAxiosSecure from '../../../components/Hooks/UseAxiosSecure';
 
-import { toast } from "react-toastify";
-import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
-
-const UpdateRoleModal = ({ isOpen, closeModal, user, refetch }) => {
-  const [updatedRole, setUpdatedRole] = useState(user?.role);
+const UpdateRoleModal = ({ user, isOpen, closeModal, refetch }) => {
   const axiosSecure = UseAxiosSecure();
-  const handleUpdateRole = async () => {
+
+  const handleUpdate = async (selectedRole) => {
     try {
-      await axiosSecure.patch(`/user-role`, {
-        email: user?.email,
-        role: updatedRole,
-      });
-      // toast.success("Role Updated!");
-      refetch();
+      const res = await axiosSecure.patch(`/users/role/${user?._id}`, { role: selectedRole });
+      if (res.data.modifiedCount > 0) {
+        await refetch();
+        Swal.fire("Success!", `User role is now ${selectedRole}`, "success");
+        closeModal();
+      } else {
+        Swal.fire("Info", "Role is already set to this", "info");
+        closeModal();
+      }
     } catch (error) {
-     toast.error(error?.response?.data?.message);
-     
-    } finally {
-      closeModal();
+      Swal.fire("Error!", "Something went wrong", "error");
     }
   };
+
+  if (!isOpen) return null;
+
   return (
-    <div>
-      <Dialog
-        open={isOpen}
-        as="div"
-        className="relative z-10 focus:outline-none"
-        onClose={closeModal}
-      >
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
-            <DialogPanel
-              transition
-              className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 shadow-xl"
-            >
-              <DialogTitle
-                as="h3"
-                className="text-base/7 font-medium text-black"
-              >
-                Update User Role
-              </DialogTitle>
-              <form>
-                <div>
-                  <select
-                    value={updatedRole}
-                    onChange={(e) => setUpdatedRole(e.target.value)}
-                    className="w-full my-3 border border-gray-200 rounded-xl px-2 py-3"
-                    name="role"
-                    id=""
-                  >
-                    <option value="customer">Customer</option>
-                    <option value="Librarian">Librarian </option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <div className="flex mt-2 justify-around">
-                  <button
-                    onClick={handleUpdateRole}
-                    type="button"
-                    className="cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-purple-100 px-4 py-2 text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
-                  >
-                    Update
-                  </button>
-                  <button
-                    type="button"
-                    className="cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </DialogPanel>
-          </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm">
+      <div className="bg-white p-6 rounded-lg shadow-2xl w-80 border-t-4 border-purple-600">
+        <h2 className="text-xl font-bold mb-2 text-center text-purple-600">Update User Role</h2>
+        <p className="text-center text-sm text-gray-600 mb-6">Current User: <strong>{user?.name}</strong></p>
+        
+        <div className="flex flex-col gap-3">
+          {/* Admin Button */}
+          <button 
+            onClick={() => handleUpdate('admin')}
+            className="bg-purple-600 text-white py-2 rounded shadow-md hover:bg-purple-700 font-medium transition"
+          >
+            Make Admin
+          </button>
+
+          {/* Librarian Button (New) */}
+          <button 
+            onClick={() => handleUpdate('librarian')}
+            className="bg-blue-600 text-white py-2 rounded shadow-md hover:bg-blue-700 font-medium transition"
+          >
+            Make Librarian
+          </button>
+
+          {/* Customer Button */}
+          <button 
+            onClick={() => handleUpdate('customer')}
+            className="bg-gray-200 text-gray-800 py-2 rounded shadow-sm hover:bg-gray-300 font-medium transition"
+          >
+            Make Customer
+          </button>
+
+          <button 
+            onClick={closeModal}
+            className="text-red-500 mt-4 text-sm font-semibold hover:underline"
+          >
+            Cancel
+          </button>
         </div>
-      </Dialog>
+      </div>
     </div>
   );
 };

@@ -1,158 +1,113 @@
-
 import Swal from "sweetalert2";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
-
 const OrderTableRow = ({ order, refetch }) => {
   const axiosSecure = UseAxiosSecure();
+  
   const {
     _id,
-    name,
+    bookName, 
     authorName,
-    customerName,
-    customerEmail,
+    userName,
+    userEmail,
     price,
     status,
     paymentStatus,
-    order_date,
-    quantity,
-    
+    orderDate, 
+    quantity = 1,
   } = order;
 
-  const handleCencelled = async (order) => {
+  // Handle Cancel Order
+  const handleCancelled = async () => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: "Do you want to cancel this order?",
       icon: "warning",
       showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, cancel it!",
-      cancelButtonText: "No",
     });
 
     if (!confirm.isConfirmed) return;
 
-    const cancelledStatus = { status: "cancelled" };
-
     try {
-      const res = await axiosSecure.patch(
-        `/order-cancelled/${order._id}`,
-        cancelledStatus
-      );
-
+      const res = await axiosSecure.patch(`/order-cancelled/${_id}`);
       if (res.data.modifiedCount > 0) {
-        Swal.fire({
-          title: "Cancelled!",
-          text: "Order has been cancelled successfully.",
-          icon: "success",
-          timer: 1500,
-          showConfirmButton: false,
-        });
+        Swal.fire("Cancelled!", "Order has been cancelled.", "success");
         refetch();
       }
-
-      return res.data;
     } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Something went wrong.",
-        icon: "error",error,
-      });
+      Swal.fire("Error!", "Failed to cancel order.", "error");
     }
   };
 
-  const handlePayment = async (payment) => {
+  // Handle Stripe Payment
+  const handlePayment = async () => {
     const paymentInfo = {
-      name: payment.name,
-      price: payment.price,
-      customerEmail: payment.customerEmail,
-      _id: payment._id,
-      authorName: payment.authorName,
+      name: bookName,
+      price: price,
+      customerEmail: userEmail,
+      _id: _id,
     };
-    const res = await axiosSecure.post(`/create-checkout-session`, paymentInfo);
-    return (window.location.href = res.data.url);
+    try {
+      const res = await axiosSecure.post(`/create-checkout-session`, paymentInfo);
+      window.location.href = res.data.url;
+    } catch (error) {
+      Swal.fire("Error!", "Payment initialization failed.", "error");
+    }
   };
 
   return (
-    <tr className="bg-purple-50 border-b border-gray-300 text-gray-700">
-      {/* Customer Name */}
-      <td className="py-3 px-4 text-gray-700 text-center text-sm text-nowrap">
-        {customerName}
-      </td>
-
-      {/* Book / Product Name */}
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {name}
-      </td>
-
-      {/* Author Name */}
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {authorName}
-      </td>
-
-      {/* Customer Email */}
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {customerEmail}
-      </td>
-
-      {/* Quantity */}
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        <span
-          className={`${
-            paymentStatus === "unpaid"
-              ? "text-red-500 bg-red-100 "
-              : "text-green-500 bg-green-100  "
-          } py-1 px-3 rounded-full`}
-        >
-          {" "}
+    <tr className="bg-white border-b hover:bg-purple-50 transition">
+      <td className="py-3 px-4 text-center text-sm">{userName}</td>
+      <td className="py-3 px-4 text-center text-sm font-medium">{bookName}</td>
+      <td className="py-3 px-4 text-center text-sm">{authorName || "N/A"}</td>
+      <td className="py-3 px-4 text-center text-sm">{userEmail}</td>
+      
+      {/* Payment Status */}
+      <td className="py-3 px-4 text-center text-sm">
+        <span className={`px-3 py-1 rounded-full font-bold ${paymentStatus === 'paid' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
           {paymentStatus}
         </span>
       </td>
 
-      {/* Status */}
-      <td
-        className={`py-3 px-4  text-gray-700 text-center text-sm text-nowrap `}
-      >
-        <span
-          className={`${
-            status === "pending" || status === "cancelled"
-              ? "text-red-500 bg-red-100 "
-              : "text-green-500 bg-green-100  "
-          } py-1 px-3 rounded-full`}
-        >
-          {" "}
+      {/* Delivery Status */}
+      <td className="py-3 px-4 text-center text-sm">
+        <span className={`px-3 py-1 rounded-full font-bold ${status === 'pending' ? 'bg-yellow-100 text-yellow-600' : status === 'cancelled' ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-600'}`}>
           {status}
         </span>
       </td>
 
-      {/* Price */}
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        ${price}
-      </td>
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {quantity}
+      <td className="py-3 px-4 text-center text-sm font-bold text-purple-700">${price}</td>
+      <td className="py-3 px-4 text-center text-sm">{quantity}</td>
+      <td className="py-3 px-4 text-center text-sm text-nowrap">
+        {orderDate ? new Date(orderDate).toLocaleDateString() : "N/A"}
       </td>
 
-      {/* Order Date */}
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {new Date(order_date).toDateString()}
-      </td>
+      {/* Action Buttons with Requirements Logic */}
+      <td className="py-3 px-4 text-center text-sm space-x-2">
+        {/* Requirement: Pay button shows if pending and unpaid */}
+        {status === "pending" && paymentStatus === "unpaid" && (
+          <button
+            onClick={handlePayment}
+            className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded shadow"
+          >
+            Pay Now
+          </button>
+        )}
 
-      {/* Actions */}
-      <td className="py-3 px-4  text-center text-sm text-nowrap">
-        <button
-          disabled={paymentStatus === "paid" || status === "cancelled"}
-          onClick={() => handlePayment(order)}
-          className="bg-green-500 text-white py-1 px-4 rounded-sm cursor-pointer text-nowrap"
-        >
-          Pay
-        </button>
-        <button
-          onClick={() => handleCencelled(order)}
-          disabled={paymentStatus === "paid" || status === "cancelled"}
-          className="bg-red-500 text-white py-1 px-4 rounded-sm cursor-pointer ml-2"
-        >
-          Cancelled
-        </button>
+        {/* Requirement: Cancel button shows ONLY if status is pending */}
+        {status === "pending" && (
+          <button
+            onClick={handleCancelled}
+            className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded shadow"
+          >
+            Cancel
+          </button>
+        )}
+
+        {/* If status is cancelled or paid, no buttons will show based on above conditions */}
       </td>
     </tr>
   );

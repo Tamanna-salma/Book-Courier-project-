@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import UseAxiosSecure from '../../../components/Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
@@ -6,79 +6,89 @@ import Loading from '../../../Pages/Loading';
 import ManageBookTable from './ManageBookTable';
 
 const ManageBook = () => {
-      const axiosSecure = UseAxiosSecure();
-  const {
-    data: books = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["mange-books"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/manage-books`);
-      return res.data;
-    },
-  });
-
-  const handleDelete = async (id) => {
-    const confirm = await Swal.fire({
-      title: "Are you sure?",
-      text: "You want to delete this book?",
-      icon: "warning",
-      showCancelButton: true,
+    const axiosSecure = UseAxiosSecure();
+    const { data: books = [], isLoading, refetch } = useQuery({
+        queryKey: ["manage-books"],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/manage-books`);
+            return res.data;
+        },
     });
 
-    if (!confirm.isConfirmed) return;
+    const handleToggleStatus = async (id, currentStatus) => {
+        const newStatus = currentStatus === "published" ? "unpublished" : "published";
+        try {
+            const res = await axiosSecure.patch(`/books/status/${id}`, { status: newStatus });
+            if (res.data.acknowledged) {
+                await refetch();
+                Swal.fire({
+                    title: "Success!",
+                    text: `Book is now ${newStatus}`,
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        } catch (error) {
+            Swal.fire("Error!", "Failed to update status", "error");
+        }
+    };
 
-    try {
-      const res = await axiosSecure.delete(`/books/${id}`);
+    const handleDelete = async (id) => {
+        const confirm = await Swal.fire({
+            title: "Are you sure?",
+            text: "This will delete the book and all associated orders!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete everything!"
+        });
 
-      if (res.data.deletedCount > 0) {
-        Swal.fire("Deleted!", "Book has been removed.", "success");
-        refetch();
-      }
-    } catch (error) {
-      Swal.fire("Error!", "Something went wrong.", "error",error);
-    }
-  };
+        if (!confirm.isConfirmed) return;
 
-  if (isLoading) return <Loading />;
-  return (
-     <div>
-      <h2 className="text-center text-3xl md:text-4xl font-bold text-purple-500">
-        Manage All Books
-      </h2>
+        try {
+            const res = await axiosSecure.delete(`/books/${id}`);
+            if (res.data.deletedCount > 0) {
+                await refetch();
+                Swal.fire("Deleted!", "Book and related orders removed.", "success");
+            }
+        } catch (error) {
+            Swal.fire("Error!", "Something went wrong.", "error");
+        }
+    };
 
-      <div className="px-4 sm:px-8">
-        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <table className="min-w-full leading-normal">
-              <thead>
-                <tr className="bg-purple-200">
-                  <th className="table-head  py-2 ">Image</th>
-                  <th className="table-head  py-2 ">Book Name</th>
-                  <th className="table-head  py-2 ">Author Name</th>
-                  <th className="table-head  py-2 ">Create Date</th>
-                  <th className="table-head  py-2 ">Price</th>
-                  <th className="table-head  py-2 ">Status</th>
-                </tr>
-              </thead>
+    if (isLoading) return <Loading />;
 
-              <tbody>
-                {books?.map((book) => (
-                  <ManageBookTable
-                    key={book._id}
-                    book={book}
-                    refetch={refetch}
-                    handleDelete={handleDelete}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+    return (
+        <div className="p-4">
+            <h2 className="text-center text-3xl font-bold text-purple-600 mb-6">Manage All Books</h2>
+            <div className="overflow-x-auto shadow-lg rounded-lg">
+                <table className="table w-full bg-white">
+                    <thead className="bg-purple-100">
+                        <tr>
+                            <th>Book</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {books.map((book) => (
+                            <ManageBookTable
+                                key={book._id}
+                                book={book}
+                                handleToggleStatus={handleToggleStatus}
+                                handleDelete={handleDelete}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
-    </div>
-  )
-}
+    );
+};
 
 export default ManageBook;

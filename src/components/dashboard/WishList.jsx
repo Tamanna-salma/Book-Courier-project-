@@ -1,11 +1,11 @@
-
 import { useQuery } from "@tanstack/react-query";
 import UseAuth from "../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../components/Hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
 import Loading from "../../Pages/Loading";
+
 const WishList = () => {
-    const {user}=UseAuth()
+  const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
 
   const {
@@ -13,18 +13,18 @@ const WishList = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["wishLists"],
+    queryKey: ["wishLists", user?.email], 
+    enabled: !!user?.email, 
     queryFn: async () => {
-      const res = await axiosSecure.get(`/wish-list`);
+      const res = await axiosSecure.get(`/wish-list/${user?.email}`);
       return res.data;
     },
   });
 
   const handleWishListDelete = async (id) => {
-    // Confirm delete
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You want to remove this from wishlist!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -37,81 +37,72 @@ const WishList = () => {
         const res = await axiosSecure.delete(`/wish-list/${id}`);
 
         if (res.data.deletedCount > 0) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Book removed from your wishlist.",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-
+          Swal.fire("Deleted!", "Book removed from wishlist.", "success");
           refetch();
         }
       } catch (error) {
-        Swal.fire({
-          title: "Error!",
-          text: "Something went wrong. Please try again.",
-          icon: "error",
-          confirmButtonText: "OK" ,error
-        });
+        Swal.fire("Error!", "Failed to delete item.", "error");
       }
     }
   };
 
   if (isLoading) return <Loading />;
+
   return (
-    <div className="p-5">
+    <div className="p-5 max-w-6xl mx-auto">
       <h2 className="text-2xl font-semibold mb-5 text-center text-purple-500">
-        My Wishlist
+        My Wishlist ({wishLists.length})
       </h2>
 
-      <div className="overflow-x-auto">
-        <table className="table w-full ">
+      <div className="overflow-x-auto shadow-md rounded-lg">
+        <table className="table w-full">
           <thead className="bg-purple-200">
-            <tr>
+            <tr className="text-gray-700">
               <th>No.</th>
               <th>Image</th>
               <th>Book Name</th>
               <th>Author</th>
-              <th>Owner Email</th>
               <th>Added Date</th>
-              <th>Actions</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {wishLists.map((item, index) => (
-              <tr key={item._id} className="hover:bg-purple-100 ">
-                <td>{index + 1}</td>
-
-                <td>
-                  <img
-                    src={item.image}
-                    alt={item.bookName}
-                    className="w-14 h-14 object-cover rounded"
-                  />
-                </td>
-
-                <td className="font-medium text-nowrap">{item.bookName}</td>
-
-                <td className=" text-nowrap">{item.authorName}</td>
-
-                <td className=" text-nowrap">{item.authorEmail}</td>
-
-                <td className=" text-nowrap">
-                  {item.wishList_date
-                    ? new Date(item.wishList_date).toLocaleDateString()
-                    : "N/A"}
-                </td>
-                <td className=" text-nowrap">
-                  <button
-                    onClick={() => handleWishListDelete(item._id)}
-                    className="py-1 px-2 rounded-sm bg-red-500 text-white cursor-pointer"
-                  >
-                    Delete
-                  </button>
+            {wishLists.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center py-10 text-gray-500">
+                  Your wishlist is empty!
                 </td>
               </tr>
-            ))}
+            ) : (
+              wishLists.map((item, index) => (
+                <tr key={item._id} className="hover:bg-purple-50 border-b">
+                  <td>{index + 1}</td>
+                  <td>
+                    <img
+                      src={item.image}
+                      alt={item.bookName}
+                      className="w-12 h-16 object-cover rounded shadow-sm"
+                    />
+                  </td>
+                  <td className="font-medium">{item.bookName}</td>
+                  <td>{item.authorName}</td>
+                  <td>
+                    {item.wishList_date
+                      ? new Date(item.wishList_date).toLocaleDateString()
+                      : "N/A"}
+                  </td>
+                  <td className="text-center">
+                    <button
+                      onClick={() => handleWishListDelete(item._id)}
+                      className="py-1 px-3 rounded bg-red-500 hover:bg-red-600 text-white transition-colors"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

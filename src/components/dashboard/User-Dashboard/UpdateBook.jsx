@@ -1,7 +1,5 @@
-import React from "react";
-import { FaCalendarAlt, FaFileAlt, FaSortNumericDown } from "react-icons/fa";
-import { FaBook, FaDollarSign, FaImage, FaLanguage, FaLayerGroup, FaUser } from "react-icons/fa6";
-import { useParams } from "react-router";
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/UseAuth";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
@@ -11,11 +9,12 @@ import { imageUpload } from "../../../utilites";
 
 const UpdateBook = () => {
     const { id } = useParams();
-    const { user } = UseAuth();
+    const navigate = useNavigate();
     const axiosSecure = UseAxiosSecure();
     const { register, handleSubmit, reset } = useForm();
 
-    const { data: updateBooks = {} } = useQuery({
+    // Fetching the existing book data
+    const { data: book = {}, isLoading } = useQuery({
         queryKey: ["updateBooks", id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/update-book/${id}`);
@@ -23,236 +22,135 @@ const UpdateBook = () => {
         },
     });
 
+    // Prefill the form once data is loaded
+    useEffect(() => {
+        if (book) {
+            reset(book);
+        }
+    }, [book, reset]);
 
-    const handleBookAdd = async (data) => {
-        const {
-            bookName,
-            author,
-            publisher,
-            publishedYear,
-            totalPages,
-            price,
-            stockQuantity,
-            category,
-            status,
-            tags,
-            description,
-            bookCover,
-            format,
-
-        } = data;
-        const imageFile = bookCover[0];
-
+    const handleUpdate = async (data) => {
         try {
-            const image = await imageUpload(imageFile);
+            let imageUrl = book.image; // Keep current image by default
 
-            const bookData = {
-            bookName,
-            author,
-            publisher,
-           publishedYear,
-            totalPages,
-            price,
-            stockQuantity,
-            category,
-            status,
-            tags,
-            description,
-            bookCover,
-            image,
-            format,
+            // If a new image is selected, upload it
+            if (data.bookCover && data.bookCover.length > 0 && data.bookCover[0] instanceof File) {
+                imageUrl = await imageUpload(data.bookCover[0]);
+            }
+
+            // Destructure to remove file object and _id
+            const { bookCover, _id, ...otherData } = data;
+
+            const updatedBookData = {
+                ...otherData,
+                image: imageUrl,
+                price: parseFloat(data.price),
+                stockQuantity: parseInt(data.stockQuantity),
+                totalPages: parseInt(data.totalPages),
+                publishedYear: parseInt(data.publishedYear),
             };
-            await axiosSecure.put(`/books/${id}`, bookData);
-            Swal.fire({
-                title: `Update book ${bookName}!`,
-                text: "Update book  successful",
-                icon: "success",
-                confirmButtonColor: "#22c55e",
-            });
-            reset();
+
+            const res = await axiosSecure.put(`/books/${id}`, updatedBookData);
+            
+            if (res.data.modifiedCount > 0) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Book updated successfully",
+                    icon: "success",
+                    confirmButtonColor: "#A855F7",
+                });
+                navigate('/dashboard/my-books');
+            } else {
+                Swal.fire({
+                    title: "No Changes Made",
+                    text: "The information remains the same.",
+                    icon: "info"
+                });
+            }
         } catch (error) {
-            Swal.fire({
-                      title: "Error!",
-                      text: "Something went wrong. Please try again.",
-                      icon: "error",
-                      confirmButtonText: "OK" ,error
-                    });
+            console.error(error);
+            Swal.fire("Error!", "Something went wrong while updating.", "error");
         }
     };
+
+    if (isLoading) return <div className="text-center py-20 text-purple-600 font-bold">Loading...</div>;
+
     return (
         <div className="max-w-7xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-            <h1 className="text-xl lg:text-3xl font-bold mb-8 text-center ">
-                Add a New Book
+            <h1 className="text-xl lg:text-3xl font-bold mb-8 text-center text-gray-800">
+                Update Book Information
             </h1>
-            <form
-                onSubmit={handleSubmit(handleBookAdd)}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
+            
+            <form onSubmit={handleSubmit(handleUpdate)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* Book Name */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaBook className="" /> Book Name
-                    </label>
-                    <input
-                        type="text"
-                        defaultValue={updateBooks.bookName}
-                        {...register("bookName", { required: true })}
-                        placeholder="Enter book Name"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2"
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaBook /> Book Name</label>
+                    <input type="text" {...register("bookName", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Publisher */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaUser className="" /> Publisher
-                    </label>
-                    <input
-                        defaultValue={updateBooks.publisher}
-                        {...register("publisher", { required: true })}
-                        type="text"
-                        placeholder="Enter publisher name"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2"
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaUser /> Publisher</label>
+                    <input type="text" {...register("publisher", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Published Year */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaCalendarAlt className="" /> Published Year
-                    </label>
-                    <input
-                        defaultValue={updateBooks.publishedYear}
-                        {...register("publishedYear", { required: true })}
-                        type="number"
-                        placeholder="Enter published year"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaCalendarAlt /> Published Year</label>
+                    <input type="number" {...register("publishedYear", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Total Pages */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaSortNumericDown className="" /> Total page
-                    </label>
-                    <input
-                        defaultValue={updateBooks. totalPages}
-                        {...register("totalPage", { required: true })}
-                        type="number"
-                        placeholder="Enter total pages"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
-                </div>          
-
-                <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaDollarSign className="" /> Price
-                    </label>
-                    <input
-                        defaultValue={updateBooks.price}
-                        {...register("price", { required: true })}
-                        type="number"
-                        placeholder="Enter price"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaSortNumericDown /> Total Pages</label>
+                    <input type="number" {...register("totalPages", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Price */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaSortNumericDown className="" /> Stock Quantity
-                    </label>
-                    <input
-                        defaultValue={updateBooks.stockQuantity}
-                        {...register("stockQuantity", { required: true })}
-                        type="number"
-                        placeholder="Enter stock quantity"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2"
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaDollarSign /> Price</label>
+                    <input type="number" step="0.01" {...register("price", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Stock */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="" /> Format
-                    </label>
-                    <input
-                        defaultValue={updateBooks.format}
-                        {...register("format", { required: true })}
-                        type="text"
-                        placeholder="Hardcover / Paperback / eBook"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaSortNumericDown /> Stock Quantity</label>
+                    <input type="number" {...register("stockQuantity", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Category */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="" /> Category
-                    </label>
-                    <input
-                        defaultValue={updateBooks.category}
-                        {...register("category", { required: true })}
-                        type="text"
-                        placeholder="Enter category"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
-                </div>
-                <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="" /> tags
-                    </label>
-                    <input
-                        defaultValue={updateBooks.tags}
-                        {...register("tags", { required: true })}
-                        type="text"
-                        placeholder="Enter tags"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaLayerGroup /> Category</label>
+                    <input type="text" {...register("category", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
+                {/* Status */}
                 <div>
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaLayerGroup className="text-purple-500" /> Status
-                    </label>
-                    <select
-                        {...register("status", { required: true })}
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                        defaultValue={updateBooks?.status}
-                    >
-                        <option value="" disabled>
-                            Select status
-                        </option>
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaLayerGroup className="text-purple-500" /> Status</label>
+                    <select {...register("status", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2">
                         <option value="published">Published</option>
                         <option value="unpublished">Unpublished</option>
                     </select>
                 </div>
 
-                {/* Book Cover (full width) */}
+                {/* Book Cover */}
                 <div className="md:col-span-2">
-                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
-                        <FaImage className="" /> Book Cover
-                    </label>
-                    <input
-                        {...register("bookCover", { required: true })}
-                        type="file"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
+                    <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2"><FaImage /> Update Book Cover (Optional)</label>
+                    <input type="file" {...register("bookCover")} className="w-full border border-gray-300 rounded px-3 py-2" />
+                    <p className="text-xs text-purple-600 mt-1 italic">* Current cover will be kept if empty</p>
                 </div>
 
-                {/* Book Description (full width) */}
+                {/* Description */}
                 <div className="md:col-span-2">
-                    <label className="block text-gray-700 font-semibold mb-1">
-                        Book Description
-                    </label>
-                    <textarea
-                        defaultValue={updateBooks?.description}
-                        {...register("description", { required: true })}
-                        placeholder="Enter book description"
-                        className="w-full border border-gray-300 text-gray-700 rounded px-3 py-2 "
-                    />
+                    <label className="block text-gray-700 font-semibold mb-1">Book Description</label>
+                    <textarea rows="4" {...register("description", { required: true })} className="w-full border border-gray-300 rounded px-3 py-2" />
                 </div>
 
-                {/* Submit Button (full width) */}
+                {/* Submit Button */}
                 <div className="md:col-span-2">
-                    <button
-                        type="submit"
-                        className="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-800 transition"
-                    >
-                        Update Book
+                    <button type="submit" className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition font-bold">
+                        Save Changes
                     </button>
                 </div>
             </form>

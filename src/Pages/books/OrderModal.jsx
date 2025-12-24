@@ -6,32 +6,42 @@ const OrderModal = ({ book, user, closeModal }) => {
   const [address, setAddress] = useState("");
 
   const handleOrder = () => {
-    const orderInfo = {
-      bookId: book._id,
-      bookName: book.bookName,
-      price: book.price,
-      userName: user?.displayName,
-      userEmail: user?.email,
-      phone,
-      address,
-      status: "pending",
-      paymentStatus: "unpaid",
-      orderDate: new Date(),
-    };
+  if (!phone || !address) {
+    toast.error("Please provide phone and address!");
+    return;
+  }
 
-    fetch("http://localhost:3000/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderInfo),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+  const orderInfo = {
+    bookId: book._id,
+    bookName: book.bookName,
+    bookImage: book.image, 
+    price: book.price,
+    userName: user?.displayName,
+    userEmail: user?.email,
+    phone,
+    address,
+    status: "pending",
+    paymentStatus: "unpaid",
+    orderDate: new Date(),
+  };
+
+  fetch("https://book-courier-server-ten.vercel.app/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(orderInfo),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.insertedId) {
         toast.success("Order placed successfully!");
         closeModal();
-        console.log("New Order ID:", data.insertedId); 
-      })
-      .catch((err) => toast.error("Failed to place order: " + err.message));
-  };
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      toast.error("Failed to place order!");
+    });
+};
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center">

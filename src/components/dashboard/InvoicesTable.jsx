@@ -1,59 +1,47 @@
-
 import React from "react";
 
 const InvoicesTable = ({ order }) => {
   const {
     bookName,
-    customer_email,
-    transationId,
-    customer_name,
+    userEmail, 
+    transactionId,
+    userName,
     price,
-    status,
-   
-    payment_date,
-    
-    // image,
-   
+    paymentStatus, 
+    orderDate,
   } = order;
+
   return (
-    <tr className="bg-purple-50 border-b  text-gray-700  border-gray-300">
-      <td className="py-3 px-4   text-gray-700 text-center text-sm text-nowrap">
+    <tr className="bg-white border-b hover:bg-purple-50 transition text-gray-700">
+      <td className="py-3 px-4 text-center text-sm font-medium">
         {bookName}
       </td>
 
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {customer_name}
+      <td className="py-3 px-4 text-center text-sm">
+        {userName}
       </td>
 
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {customer_email}
+      <td className="py-3 px-4 text-center text-sm">
+        {userEmail}
       </td>
 
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {transationId}
+      {/* Transaction ID/Payment ID */}
+      <td className="py-3 px-4 text-center text-sm font-mono text-purple-600">
+        {transactionId || "N/A"}
       </td>
 
-      <td
-        className={`py-3 px-4  text-gray-700 text-center text-sm text-nowrap `}
-      >
-        <span
-          className={`${
-            status === "pending"
-              ? "text-red-500 bg-red-100 "
-              : "text-purple-500 bg-purple-100  "
-          } py-1 px-3 rounded-full`}
-        >
-          {" "}
-          {status}
+      <td className="py-3 px-4 text-center text-sm">
+        <span className="bg-green-100 text-green-600 py-1 px-3 rounded-full font-bold">
+          {paymentStatus}
         </span>
       </td>
 
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
+      <td className="py-3 px-4 text-center text-sm font-bold">
         ${price}
       </td>
 
-      <td className="py-3 px-4  text-gray-700 text-center text-sm text-nowrap">
-        {new Date(payment_date).toDateString()}
+      <td className="py-3 px-4 text-center text-sm text-nowrap">
+        {orderDate ? new Date(orderDate).toLocaleDateString() : "N/A"}
       </td>
     </tr>
   );

@@ -7,7 +7,7 @@ const LibrarianRoute = ({ children }) => {
   const [role, isRoleLoading] = useRole();
 
   if (isRoleLoading) return <Loading />;
-  if (role === "Librarian") return children;
+  if (role === "librarian") return children;
   return <Navigate to="/" replace />;
 };
 

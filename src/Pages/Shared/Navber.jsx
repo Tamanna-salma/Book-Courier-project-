@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import userimg from "../../assets/user.png";
 import { Link, NavLink } from "react-router";
 import Logo from "../Logo";
+import useRole from "../../components/Hooks/useRole";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   // Auth
   const { user, logOut } = UseAuth();
-
+const{ role}=useRole();
   const handleLogout = () => {
     logOut()
       .then(() => toast.success("You have logged out successfully"))
@@ -49,7 +50,7 @@ const Navbar = () => {
             : "text-gray-600 text-lg font-bold hover:text-purple-600"
         }
       >
-        Books
+      All Books
       </NavLink>
 
       <NavLink
@@ -63,7 +64,7 @@ const Navbar = () => {
         About
       </NavLink>
 
-      {user && (
+      {/* {role==='user' &&( */}
         <NavLink
           
           to="/dashboard"
@@ -72,9 +73,9 @@ const Navbar = () => {
               ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
               : "text-gray-600 text-lg font-bold hover:text-purple-600"
           }>
-          Dashboard
+        Dashbord
         </NavLink>
-      )}
+       {/* )}  */}
         
     </>
   );

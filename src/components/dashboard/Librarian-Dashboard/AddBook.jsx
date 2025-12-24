@@ -3,7 +3,7 @@ import UseAuth from "../../../components/Hooks/UseAuth";
 import { useForm } from "react-hook-form";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import Swal from "sweetalert2";
-import { FaBook, FaDollarSign, FaImage,  FaLayerGroup, FaUser } from "react-icons/fa6";
+import { FaBook, FaDollarSign, FaImage, FaLayerGroup, FaUser } from "react-icons/fa6";
 import { FaRegCalendarAlt, FaSortNumericDown } from "react-icons/fa";
 import { imageUpload } from "../../../utilites";
 
@@ -14,57 +14,41 @@ const AddBook = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const handleBookAdd = async (data) => {
-    const {
-      bookName,
-      authorName,
-      publisher,
-     publishedYear,
-     pageNumber,  
-      price,
-     stockQuantity,
-      category,
-      status,
-      tags,
-      description,
-      bookCover,
-    } = data;
-    const imageFile = bookCover[0];
+    const imageFile = data.bookCover[0];
 
     try {
       const image = await imageUpload(imageFile);
 
-     const bookData = {
-      bookName,
-      authorName ,
-      authorEmail: user?.email, 
-      publisher,
-      publishedYear: parseInt(publishedYear),
-      pageNumber: parseInt(pageNumber), 
-      price: parseFloat(price),
-     stockQuantity: parseInt(stockQuantity), 
-      category,
-      status,
-      tags: tags.split(',').map(tag => tag.trim()), 
-      description,
-      image,
-     
-    };
-      await axiosSecure.post("/books", bookData);
-      Swal.fire({
-        title: `New Book added!`,
-        text: "New Book Added successful",
-        icon: "success",
-        confirmButtonColor: "#22c55e",
-      });
-      reset();
-    } catch (error) {
+      const bookData = {
+        bookName: data.bookName,
+        authorName: data.authorName,
+        authorEmail: user?.email,
+        publisher: data.publisher,
+        publishedYear: parseInt(data.publishedYear),
+        pageNumber: parseInt(data.pageNumber),
+        price: parseFloat(data.price),
+        stockQuantity: parseInt(data.stockQuantity),
+        category: data.category,
+        format: data.format,
+        status: data.status,
+        tags: data.tags.split(',').map(tag => tag.trim()),
+        description: data.description,
+        image: image,
+      };
+
+      const res = await axiosSecure.post("/books", bookData);
+
+      if (res.data.insertedId) {
         Swal.fire({
-  icon: "error",
-  title: "Error adding book!",
-  text: error.message || "Something went wrong",
-});
-
-
+          title: "Success!",
+          text: "Book Added Successfully",
+          icon: "success",
+        });
+        reset();
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error!", error.message, "error");
     }
   };
   return (
@@ -137,7 +121,7 @@ const AddBook = () => {
           />
         </div>
 
-        
+
         <div>
           <label className="text-gray-700 font-semibold mb-1 flex items-center gap-2">
             <FaDollarSign className="text-purple-500" /> Price

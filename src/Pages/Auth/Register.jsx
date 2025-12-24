@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
@@ -7,7 +6,7 @@ import SocialLogin from "../SocialLogin";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { imageUpload } from "../../utilites";
-
+import axios from "axios";
 
 const Register = () => {
   const [toggle, setToggle] = useState(false);
@@ -20,27 +19,35 @@ const Register = () => {
     setToggle(!toggle);
   };
 
+  const saveUserToDb = async (user) => {
+    const userData = {
+      name: user?.displayName,
+      email: user?.email,
+      image: user?.photoURL,
+    };
+    await axios.post('https://book-courier-server-ten.vercel.app/users', userData);
+  };
+
   const handleRegistration = async (data) => {
     try {
       const imageFile = data.photo[0];
-
-      //  Firebase Register
       const result = await registeruser(data.email, data.password);
-      console.log("User created:", result.user);
-
-      //  Upload image to imgbb
       const imageUrl = await imageUpload(imageFile);
 
-      // Update Firebase profile
       await updateUserProfile({
         displayName: data.name,
         photoURL: imageUrl,
       });
 
-      toast.success("Registration successful ");
+      await saveUserToDb({
+        displayName: data.name,
+        email: data.email,
+        photoURL: imageUrl,
+      });
+
+      toast.success("Registration successful");
       navigate(location.state || "/");
     } catch (error) {
-      console.error(error);
       toast.error(error.code || "Registration failed");
     }
   };
@@ -52,11 +59,8 @@ const Register = () => {
           <h1 className="font-semibold text-lg text-center mt-4">
             Register your account
           </h1>
-
           <div className="card-body">
             <fieldset className="fieldset">
-
-              {/* Name */}
               <label className="label">Name</label>
               <input
                 type="text"
@@ -67,8 +71,6 @@ const Register = () => {
               {errors.name && (
                 <p className="text-red-500 text-sm">Name is required</p>
               )}
-
-              {/* Photo */}
               <label className="label">Photo</label>
               <input
                 type="file"
@@ -78,8 +80,6 @@ const Register = () => {
               {errors.photo && (
                 <p className="text-red-500 text-sm">Photo is required</p>
               )}
-
-              {/* Email */}
               <label className="label">Email</label>
               <input
                 type="email"
@@ -90,8 +90,6 @@ const Register = () => {
               {errors.email && (
                 <p className="text-red-500 text-sm">Email is required</p>
               )}
-
-              {/* Password */}
               <div className="relative">
                 <label className="label">Password</label>
                 <input
@@ -99,8 +97,7 @@ const Register = () => {
                   {...register("password", {
                     required: true,
                     minLength: 6,
-                    pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
                   })}
                   className="input input-bordered"
                   placeholder="Password"
@@ -112,38 +109,24 @@ const Register = () => {
                   {toggle ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
-
               {errors.password?.type === "required" && (
                 <p className="text-red-500 text-sm">Password is required</p>
               )}
               {errors.password?.type === "minLength" && (
-                <p className="text-red-500 text-sm">
-                  Password must be at least 6 characters
-                </p>
+                <p className="text-red-500 text-sm">Password must be 6 characters</p>
               )}
               {errors.password?.type === "pattern" && (
-                <p className="text-red-500 text-sm">
-                  Must include uppercase, lowercase, number & special character
-                </p>
+                <p className="text-red-500 text-sm">Weak password pattern</p>
               )}
-
-              <button className="btn btn-neutral mt-4">
-                Register
-              </button>
+              <button className="btn btn-neutral mt-4">Register</button>
             </fieldset>
-
             <p className="text-sm mt-2">
               Already have an account?{" "}
-              <Link
-                state={location.state}
-                className="text-blue-500 underline"
-                to="/auth/login"
-              >
+              <Link state={location.state} className="text-blue-500 underline" to="/auth/login">
                 Login
               </Link>
             </p>
           </div>
-
           <SocialLogin />
         </div>
       </form>

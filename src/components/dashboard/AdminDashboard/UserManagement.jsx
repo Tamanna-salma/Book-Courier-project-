@@ -3,6 +3,7 @@ import UseAuth from "../../../components/Hooks/UseAuth";
 import UseAxiosSecure from "../../../components/Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Pages/Loading";
+import UserDataRow from "../../dashboard/User-Dashboard/UserDataRow"
 
 
 const UserManagement = () => {
@@ -17,7 +18,7 @@ const UserManagement = () => {
     queryKey: ["all-user", user?.email],
    
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-user/${user.email}`);
+      const res = await axiosSecure.get(`/users`);
       return res.data;
     },
   });
