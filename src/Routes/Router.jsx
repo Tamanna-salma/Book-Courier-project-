@@ -27,6 +27,7 @@ import UserManagement from "../components/dashboard/AdminDashboard/UserManagemen
 import PrivateRoute from "./PrivateRoute";
 import Coverage from "../Pages/Coverage";
 import Blog from "../components/Blog";
+import Support from "../components/Support";
 
 
 const router = createBrowserRouter([
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
       {
         path: 'blog',
         element:<Blog></Blog>
+
+      },
+      {
+        path: 'support',
+        element:<Support></Support>
 
       },
 

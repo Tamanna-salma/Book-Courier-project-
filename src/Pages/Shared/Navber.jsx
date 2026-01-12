@@ -84,6 +84,16 @@ const{ role}=useRole();
       >
         Blog
       </NavLink>
+      <NavLink
+        to="/support"
+        className={({ isActive }) =>
+          isActive
+            ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+            : "text-gray-600 text-lg font-bold hover:text-purple-600"
+        }
+      >
+     Support
+      </NavLink>
 
       {/* {role==='user' &&( */}
         <NavLink
