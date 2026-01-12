@@ -4,6 +4,8 @@ import Books from '../books/Books'
 import WhyBookCourier from './WhyBookCourier'
 import Stats from '../Stats'
 import Categories from '../../components/Categories'
+import TrustedPartners from '../../components/TrustedPartners'
+import ContactMe from '../../components/ContactMe'
 
 const Home = () => {
   return (
@@ -12,7 +14,9 @@ const Home = () => {
         <Books></Books>     
         <WhyBookCourier></WhyBookCourier>
         <Categories></Categories>
+        <TrustedPartners></TrustedPartners>
         <Stats></Stats>
+        <ContactMe></ContactMe>
         
         
         

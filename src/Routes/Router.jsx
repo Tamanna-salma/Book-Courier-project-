@@ -26,6 +26,7 @@ import ManageBook from "../components/dashboard/AdminDashboard/ManageBook";
 import UserManagement from "../components/dashboard/AdminDashboard/UserManagement";
 import PrivateRoute from "./PrivateRoute";
 import Coverage from "../Pages/Coverage";
+import Blog from "../components/Blog";
 
 
 const router = createBrowserRouter([
@@ -38,17 +39,22 @@ const router = createBrowserRouter([
         element: <Home></Home>
       },
       {
-        path: "/allbooks",
+        path: "allbooks",
         element: <AllBooks></AllBooks>
       },
       {
-        path: '/about',
+        path: 'about',
         element: <About></About>
 
       },
       {
-        path: '/covarage',
+        path: 'covarage',
         element:<Coverage></Coverage>
+
+      },
+      {
+        path: 'blog',
+        element:<Blog></Blog>
 
       },
 

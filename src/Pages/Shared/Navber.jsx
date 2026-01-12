@@ -74,6 +74,17 @@ const{ role}=useRole();
         Covarage
       </NavLink>
 
+      <NavLink
+        to="/blog"
+        className={({ isActive }) =>
+          isActive
+            ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+            : "text-gray-600 text-lg font-bold hover:text-purple-600"
+        }
+      >
+        Blog
+      </NavLink>
+
       {/* {role==='user' &&( */}
         <NavLink
           
@@ -91,7 +102,7 @@ const{ role}=useRole();
   );
 
   return (
-    <div className="navbar bg-gray-200 dark:bg-gray-900 shadow-sm px-2 lg:px-5">
+    <div className="navbar bg-gray-300 dark:bg-gray-900 shadow-sm px-2 lg:px-5">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile menu button */}
@@ -171,14 +182,14 @@ const{ role}=useRole();
           <>
             <Link
               to="/auth/login"
-              className="btn bg-purple-600 hover:bg-purple-800  text-white"
+              className="btn bg-cyan-600 hover:bg-purple-700  text-white"
             >
               Login
             </Link>
 
             <Link
               to="/auth/register"
-              className="btn bg-purple-600 hover:bg-purple-800  text-white"
+              className="btn bg-cyan-600 hover:bg-purple-700  text-white"
             >
               Register
             </Link>
