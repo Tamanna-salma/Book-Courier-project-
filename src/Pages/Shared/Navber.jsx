@@ -5,6 +5,7 @@ import userimg from "../../assets/user.png";
 import { Link, NavLink } from "react-router";
 import Logo from "../Logo";
 import useRole from "../../components/Hooks/useRole";
+import Profile from "../../components/dashboard/User-Dashboard/Profile";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -177,6 +178,9 @@ const{ role}=useRole();
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-200 rounded-box w-40">
               <li className="text-center font-semibold">{user?.displayName}</li>
               <div className="divider my-1"></div>
+              <div>
+                
+              </div>
             
 
               <li>

@@ -67,10 +67,9 @@ const router = createBrowserRouter([
       {
         path: '/bookDetails/:id',
         loader: ({ params }) => fetch(`https://book-courier-server-ten.vercel.app/Books/${params.id}`),
-        element: <PrivateRoute>
+        element: 
           <BookDetails></BookDetails>
-        </PrivateRoute>
-
+       
       },
 
     ]
