@@ -24,7 +24,7 @@ const Books = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto mb-8 px-4">
+    <div className="max-w-6xl mx-auto mb-8 px-4">
       <h2 className="text-3xl font-bold mt-10 mb-6 text-center">Latest Books</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">

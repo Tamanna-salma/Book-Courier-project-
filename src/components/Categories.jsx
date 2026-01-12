@@ -12,7 +12,7 @@ const Categories = () => {
 
     return (
         <section className="py-16 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
-            <div className=" max-w-7xl mx-auto px-4 text-center">
+            <div className=" max-w-6xl mx-auto px-4 text-center">
                 {/* Section Header */}
                 <div className="mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">

@@ -6,6 +6,9 @@ import Stats from '../Stats'
 import Categories from '../../components/Categories'
 import TrustedPartners from '../../components/TrustedPartners'
 import ContactMe from '../../components/ContactMe'
+import Testimonials from '../../components/Testimonials'
+import NewsLetter from '../../components/NewsLetter'
+import Followers from '../../components/Followers'
 
 const Home = () => {
   return (
@@ -17,6 +20,9 @@ const Home = () => {
         <TrustedPartners></TrustedPartners>
         <Stats></Stats>
         <ContactMe></ContactMe>
+        <Testimonials></Testimonials>
+        <NewsLetter></NewsLetter>
+        <Followers></Followers>
         
         
         

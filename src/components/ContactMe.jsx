@@ -6,13 +6,13 @@ import { FaFacebook, FaXTwitter, FaYoutube } from "react-icons/fa6";
 
 const ContactMe = () => {
     return (
-        <section className="py-10 bg-white">
-            <div className="max-w-7xl mx-auto px-4">
+        <section className="py-10 bg-gray-100">
+            <div className="max-w-6xl mx-auto px-4">
 
                 {/* Header */}
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-black text-gray-800">
-                        Get In <span className="text-purple-600">Touch</span>
+                        Get In <span className="text-cyan-600">Touch</span>
                     </h2>
                     <p className="text-gray-500 mt-4 max-w-xl mx-auto">
                         Have a question about a restaurant or want to share your food experience? We'd love to hear from you!

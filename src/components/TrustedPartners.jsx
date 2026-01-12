@@ -12,8 +12,8 @@ const TrustedPartners = () => {
     
 
     return (
-        <section className="py-10 bg-gray-50 dark:bg-gray-900 overflow-hidden transition-colors duration-300">
-            <div className="container max-w-7xl mx-auto px-4 mb-10 text-center">
+        <section className="py-10 bg-gray-100 dark:bg-gray-900 overflow-hidden transition-colors duration-300">
+            <div className="max-w-6xl mx-auto px-4 mb-10 text-center">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-2">
                     Our Trusted Partners
                 </h2>
