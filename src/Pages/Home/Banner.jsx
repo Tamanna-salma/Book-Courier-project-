@@ -15,7 +15,7 @@ import { Link } from 'react-router';
 
 const Banner = () => {
   return (
-    <div className="mt-10 mx-auto w-full lg:max-w-[1120px] px-4 py-4">
+    <div className="mt-10 mx-auto w-full  px-4 py-4">
       <Swiper
         modules={[Navigation, Pagination, Autoplay, A11y]}
         spaceBetween={30}

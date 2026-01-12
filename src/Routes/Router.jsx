@@ -25,6 +25,7 @@ import Profile from "../components/dashboard/User-Dashboard/Profile";
 import ManageBook from "../components/dashboard/AdminDashboard/ManageBook";
 import UserManagement from "../components/dashboard/AdminDashboard/UserManagement";
 import PrivateRoute from "./PrivateRoute";
+import Coverage from "../Pages/Coverage";
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About></About>
+
+      },
+      {
+        path: '/covarage',
+        element:<Coverage></Coverage>
 
       },
 

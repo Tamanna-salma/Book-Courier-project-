@@ -79,7 +79,7 @@ const Profile = () => {
         });
       }
     } catch (error) {
-      console.error(error);
+     
       Swal.fire({
         icon: "error",
         title: "Update Failed",
@@ -139,7 +139,7 @@ const Profile = () => {
             <div className="flex items-center border p-2 rounded">
               <FaUser className="mr-2" />
               <input
-                {...register("name")}
+                {...register("name",{required:true})}
                 defaultValue={name}
                 className="w-full outline-none"
               />

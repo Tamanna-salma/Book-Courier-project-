@@ -1,18 +1,17 @@
 import React from 'react'
 import Banner from './Banner'
 import Books from '../books/Books'
-import Coverage from '../Coverage'
 import WhyBookCourier from './WhyBookCourier'
 import Stats from '../Stats'
-
+import Categories from '../../components/Categories'
 
 const Home = () => {
   return (
     <div>
         <Banner></Banner>
-        <Books></Books>
-        <Coverage></Coverage>
+        <Books></Books>     
         <WhyBookCourier></WhyBookCourier>
+        <Categories></Categories>
         <Stats></Stats>
         
         

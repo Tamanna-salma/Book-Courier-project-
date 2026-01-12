@@ -63,6 +63,16 @@ const{ role}=useRole();
       >
         About
       </NavLink>
+      <NavLink
+        to="/covarage"
+        className={({ isActive }) =>
+          isActive
+            ? "text-purple-600 border-b-2 border-purple-600 text-lg font-bold"
+            : "text-gray-600 text-lg font-bold hover:text-purple-600"
+        }
+      >
+        Covarage
+      </NavLink>
 
       {/* {role==='user' &&( */}
         <NavLink

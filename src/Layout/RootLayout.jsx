@@ -5,11 +5,15 @@ import Navbar from '../Pages/Shared/Navber'
 
 const RootLayout = () => {
   return (
-    <div>
-      <Navbar></Navbar>
+    <div className='flex flex-col h-fit bg-gray-100'>
+<header  className='sticky !z-[100] top-0 h-fit'>
+        <Navbar></Navbar>
 
+</header>
         <Outlet></Outlet>
+       <section className='sticky top-0 h-fit'>
         <Footer></Footer>
+       </section>
     </div>
   )
 }
