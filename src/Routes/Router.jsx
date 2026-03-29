@@ -28,7 +28,7 @@ import PrivateRoute from "./PrivateRoute";
 import Coverage from "../Pages/Coverage";
 import Blog from "../components/Blog";
 import Support from "../components/Support";
-
+import AboutDetails from "../Pages/AboutDetails";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +46,10 @@ const router = createBrowserRouter([
       {
         path: 'about',
         element: <About></About>
-
+      },
+      {
+        path: 'about-details',
+        element: <AboutDetails></AboutDetails>
       },
       {
         path: 'covarage',

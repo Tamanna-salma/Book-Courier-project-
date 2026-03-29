@@ -149,7 +149,7 @@ const DashboardLayout = () => {
                                     </>
                                 )}
                             </div>
-r
+
                             <li>
                                 <Link to="/dashboard/profile" className={`flex items-center text-purple-600 gap-3 py-2 px-3 rounded-lg transition mt-2 ${isActive("/dashboard/profile")}`}>
                                     <FaRegCircleUser className="text-lg" />

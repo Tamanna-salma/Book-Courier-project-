@@ -1,45 +1,54 @@
-import { FaHome, FaBuilding, FaHotel, FaWarehouse, FaLandmark, FaTree } from 'react-icons/fa'; // Example Icons
+import { FaBook, FaMicroscope, FaHistory, FaPalette, FaGlobeAmericas, FaChess } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const Categories = () => {
     const categories = [
-        { id: 1, name: 'Apartments', icon: <FaBuilding />, count: '120+ Properties' },
-        { id: 2, name: 'Villas', icon: <FaHome />, count: '80+ Properties' },
-        { id: 3, name: 'Office', icon: <FaWarehouse />, count: '45+ Properties' },
-        { id: 4, name: 'Resorts', icon: <FaHotel />, count: '30+ Properties' },
-        { id: 5, name: 'Land', icon: <FaTree />, count: '60+ Properties' },
-        { id: 6, name: 'Heritage', icon: <FaLandmark />, count: '15+ Properties' },
+        { id: 1, name: 'Fiction', icon: <FaBook />, count: '1,200+ Books' },
+        { id: 2, name: 'Science', icon: <FaMicroscope />, count: '850+ Books' },
+        { id: 3, name: 'History', icon: <FaHistory />, count: '450+ Books' },
+        { id: 4, name: 'Arts', icon: <FaPalette />, count: '300+ Books' },
+        { id: 5, name: 'Geography', icon: <FaGlobeAmericas />, count: '600+ Books' },
+        { id: 6, name: 'Strategy', icon: <FaChess />, count: '150+ Books' },
     ];
 
     return (
-        <section className="py-16 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
-            <div className=" max-w-6xl mx-auto px-4 text-center">
+        <section className="py-20 bg-transparent transition-colors duration-300">
+            <div className="max-w-7xl mx-auto px-4 text-center">
                 {/* Section Header */}
-                <div className="mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
-                        Featured Categories
+                <div className="mb-16">
+                    <h2 className="text-3xl md:text-5xl font-black text-gray-800 dark:text-white mb-4">
+                        Explore <span className="text-cyan-600">Categories</span>
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                        Explore our wide range of categories tailored to your needs. Find the best deals across the platform.
+                    <div className="w-16 h-1.5 bg-cyan-600 mx-auto rounded-full mb-6"></div>
+                    <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                        Discover a world of knowledge across our most popular genres. Find your next great read today.
                     </p>
                 </div>
 
                 {/* Categories Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                    {categories.map((item) => (
-                        <div 
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                    {categories.map((item, index) => (
+                        <motion.div 
                             key={item.id} 
-                            className="group p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-primary cursor-pointer"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: index * 0.1 }}
+                            whileHover={{ y: -10 }}
+                            className="group p-10 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-slate-800 cursor-pointer overflow-hidden relative"
                         >
-                            <div className="text-4xl text-primary mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-600/5 dark:bg-cyan-600/10 rounded-full translate-x-10 -translate-y-10 group-hover:scale-150 transition-transform duration-500"></div>
+                            
+                            <div className="text-5xl text-cyan-600 mb-6 flex justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 relative z-10">
                                 {item.icon}
                             </div>
-                            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                            <h3 className="text-xl font-black text-gray-800 dark:text-white mb-2 relative z-10 group-hover:text-cyan-600 transition-colors">
                                 {item.name}
                             </h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            <p className="text-sm font-bold text-gray-400 dark:text-gray-500 relative z-10 group-hover:text-cyan-500/80 transition-colors">
                                 {item.count}
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

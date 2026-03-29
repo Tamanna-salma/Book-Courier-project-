@@ -6,16 +6,16 @@ import { FaFacebook, FaXTwitter, FaYoutube } from "react-icons/fa6";
 
 const ContactMe = () => {
     return (
-        <section className="py-10 bg-gray-100">
+        <section className="py-10 bg-transparent transition-colors duration-300">
             <div className="max-w-6xl mx-auto px-4">
 
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-black text-gray-800">
+                    <h2 className="text-3xl md:text-5xl font-black text-gray-800 dark:text-white">
                         Get In <span className="text-cyan-600">Touch</span>
                     </h2>
-                    <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-                        Have a question about a restaurant or want to share your food experience? We'd love to hear from you!
+                    <p className="text-gray-500 dark:text-gray-400 mt-4 max-w-xl mx-auto">
+                        Have a question about your shipment or want to share your experience with Book Courier? We'd love to hear from you!
                     </p>
                 </div>
 
@@ -28,33 +28,33 @@ const ContactMe = () => {
                         transition={{ duration: 0.6 }}
                         className="space-y-6"
                     >
-                        <div className="bg-purple-100 p-8 rounded-[2rem] flex items-center gap-6">
+                        <div className="bg-purple-100 dark:bg-purple-900/20 p-8 rounded-[2rem] flex items-center gap-6 border border-transparent dark:border-purple-900/30 transition-colors">
                             <div className="w-14 h-14 bg-green-700 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">
                                 <FaPhoneAlt />
                             </div>
                             <div>
-                                <h4 className="font-bold text-gray-800 text-lg">Call Us Directly</h4>
-                                <p className="text-gray-600">+880 1234 567 890</p>
+                                <h4 className="font-bold text-gray-800 dark:text-white text-lg">Call Us Directly</h4>
+                                <p className="text-gray-600 dark:text-gray-400">+880 1234 567 890</p>
                             </div>
                         </div>
  
-                        <div className="bg-orange-100 p-8 rounded-[2rem] flex items-center gap-6">
+                        <div className="bg-orange-100 dark:bg-orange-900/20 p-8 rounded-[2rem] flex items-center gap-6 border border-transparent dark:border-orange-900/30 transition-colors">
                             <div className="w-14 h-14 bg-orange-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">
                                 <FaEnvelope />
                             </div>
                             <div>
-                                <h4 className="font-bold text-gray-800 text-lg">Email Support</h4>
-                                <p className="text-gray-600">hello@foodlovers.com</p>
+                                <h4 className="font-bold text-gray-800 dark:text-white text-lg">Email Support</h4>
+                                <p className="text-gray-600 dark:text-gray-400">support@bookcourier.com</p>
                             </div>
                         </div>
 
-                        <div className="bg-green-100 p-8 rounded-[2rem] flex items-center gap-6">
+                        <div className="bg-green-100 dark:bg-green-900/20 p-8 rounded-[2rem] flex items-center gap-6 border border-transparent dark:border-green-900/30 transition-colors">
                             <div className="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">
                                 <FaMapMarkerAlt />
                             </div>
                             <div>
-                                <h4 className="font-bold text-gray-800 text-lg">Visit Our Office</h4>
-                                <p className="text-gray-600">Level 4, Foodie Plaza, Chittagong, BD</p>
+                                <h4 className="font-bold text-gray-800 dark:text-white text-lg">Visit Our Office</h4>
+                                <p className="text-gray-600 dark:text-gray-400">Level 4, Courier Plaza, Banani, Dhaka, BD</p>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@ const ContactMe = () => {
                             <nav>
                                 <div className="flex items-center justify-center px-4 py-3 gap-4">
                                     <Link to="https://x.com/">
-                                        <FaXTwitter className='text-3xl w-12 h-12 transition cursor-pointer hover:bg-cyan-700 hover:text-white text-black' />
+                                        <FaXTwitter className='text-3xl w-12 h-12 transition cursor-pointer hover:bg-cyan-700 hover:text-white text-black dark:text-white' />
                                     </Link >
 
                                     <Link to="https://www.youtube.com/" >
@@ -84,28 +84,28 @@ const ContactMe = () => {
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-gray-100"
+                        className="bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 dark:border-slate-800 transition-colors"
                     >
                         <form className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Your Name</label>
-                                    <input type="text" placeholder="John Doe" className="w-full px-5 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-purple-500 outline-none transition" />
+                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
+                                    <input type="text" placeholder="John Doe" className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-purple-500 outline-none transition dark:text-white dark:placeholder-gray-500 shadow-inner" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                                    <input type="email" placeholder="john@example.com" className="w-full px-5 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-purple-500 outline-none transition" />
+                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                                    <input type="email" placeholder="john@example.com" className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:bg-cyan-800 outline-none transition dark:text-white dark:placeholder-gray-500 shadow-inner" />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Subject</label>
-                                <input type="text" placeholder="I have a suggestion" className="w-full px-5 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-purple-500 outline-none transition" />
+                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                                <input type="text" placeholder="I have a suggestion" className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:bg-cyan-800 outline-none transition dark:text-white dark:placeholder-gray-500 shadow-inner" />
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                                <textarea rows="4" placeholder="Tell us more..." className="w-full px-5 py-4 rounded-xl bg-gray-50 border-none focus:ring-2 focus:ring-purple-500 outline-none transition resize-none"></textarea>
+                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                                <textarea rows="4" placeholder="Tell us more..." className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:bg-cyan-800 outline-none transition resize-none dark:text-white dark:placeholder-gray-500 shadow-inner"></textarea>
                             </div>
-                            <button type="submit" className="w-full bg-cyan-800 text-white font-bold py-4 rounded-xl shadow-lg shadow-purple-200 hover:bg-purple-700 hover:-translate-y-1 transition-all active:scale-95">
+                            <button type="submit" className="w-full bg-cyan-800 text-white font-bold py-4 rounded-xl shadow-lg shadow-purple-200/20 hover:bg-cyan-600 hover:-translate-y-1 transition-all active:scale-95">
                                 Send Message
                             </button>
                         </form>

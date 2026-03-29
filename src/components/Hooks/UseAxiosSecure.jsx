@@ -5,11 +5,11 @@ import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
   baseURL: "https://book-courier-server-ten.vercel.app",
- 
+
 });
 
 const UseAxiosSecure = () => {
-  const {  logOut ,user} = UseAuth();
+  const { logOut, user } = UseAuth();
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const UseAxiosSecure = () => {
       (res) => res,
       async (err) => {
         if (err?.response?.status === 401 || err?.response?.status === 403) {
-          await  logOut();
+          await logOut();
           localStorage.removeItem("access-token");
           navigate("/auth/login");
         }
@@ -43,7 +43,7 @@ const UseAxiosSecure = () => {
       axiosSecure.interceptors.request.eject(requestInterceptor);
       axiosSecure.interceptors.response.eject(responseInterceptor);
     };
-  }, [logOut, navigate,user]);
+  }, [logOut, navigate, user]);
 
   return axiosSecure;
 };

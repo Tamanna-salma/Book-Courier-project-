@@ -26,18 +26,18 @@ const UserManagement = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="container mx-auto px-4 sm:px-8 py-8">
-      <div className="overflow-x-auto">
-        <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+    <div className="container mx-auto px-4 sm:px-8 py-4">
+      <div className="overflow-x-auto bg-white rounded-[2rem] shadow-xl shadow-purple-600/5">
+        <div className="inline-block min-w-full overflow-hidden">
           <table className="min-w-full leading-normal">
             <thead>
-              <tr className="bg-gray-200">
-                <th className="px-5 py-3 text-center">Image</th>
-                <th className="px-5 py-3 text-center">Name</th>
-                <th className="px-5 py-3 text-center">Email</th>
-                <th className="px-5 py-3 text-center">Role</th>
-                <th className="px-5 py-3 text-center">Last Login</th>
-                <th className="px-5 py-3 text-center">Action</th>
+              <tr className="bg-gray-50 border-b border-gray-100">
+                <th className="px-6 py-5 text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center">Image</th>
+                <th className="px-6 py-5 text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center">Name</th>
+                <th className="px-6 py-5 text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center">Email</th>
+                <th className="px-6 py-5 text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center">Role</th>
+                <th className="px-6 py-5 text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center">Last Login</th>
+                <th className="px-6 py-5 text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center">Action</th>
               </tr>
             </thead>
             <tbody>
